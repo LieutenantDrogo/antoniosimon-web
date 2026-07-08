@@ -26,10 +26,13 @@ BUILD.md now states correctly — v10 and BUILD.md should not disagree on colors
   derivative — no Mach bands). Never reach for `mask-image` or `opacity`
   gradients on `<img>` to fake this; regenerate the source images instead.
 - **Nav background (§2 item 8).** v10 is *not* ground truth here — its opaque
-  gradients read as chrome over the photo. Current behavior: soft scrim at all
-  widths, `text-shadow` on `nav a` for legibility (same mechanism `.lede` uses
-  everywhere else), and the mobile photo (`.env`) offset below the wrapped nav
-  rather than behind it. Do not "restore" v10's harder gradients.
+  gradients read as chrome over the photo. Current behavior: no background on
+  nav at any width; `text-shadow` on `nav a` for legibility (same mechanism
+  `.lede` uses everywhere else); the mobile portrait dissolves at its *top*
+  edge too (§5's alpha ramp), so nav sits over haze, not a hard photo edge.
+  Never offset `.env`'s `top` to clear the nav — that was tried and reverted,
+  since it just puts the nav on solid ground (the same opaque-band problem).
+  Do not "restore" v10's harder gradients either.
 - **Zero client JS** except the video facade (`VideoPoster.astro`, bound on
   `astro:page-load` — not `DOMContentLoaded`, which doesn't refire on
   client-side navigations) and Astro's `<ClientRouter />` itself.

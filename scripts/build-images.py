@@ -69,10 +69,16 @@ def desktop_alpha(width: int, height: int) -> np.ndarray:
 
 
 def mobile_alpha(width: int, height: int) -> np.ndarray:
-    """Vertical fade: opaque to y=50%, transparent by y=99%."""
+    """Vertical fade, both ends: 0 at y=0 -> 255 at y=14%, opaque plateau
+    to y=50%, then 255 -> 0 by y=99%. The portrait dissolves into the
+    ground at its top edge (behind the fixed nav) as well as its bottom,
+    instead of starting flat opaque under the nav."""
     ys = np.arange(height) / height
-    t = (ys - 0.50) / (0.99 - 0.50)
-    col = (255 * (1 - smootherstep(t))).round().astype(np.uint8)
+    t_rise = (ys - 0.0) / (0.14 - 0.0)
+    alpha_rise = smootherstep(t_rise) * 255
+    t_fall = (ys - 0.50) / (0.99 - 0.50)
+    alpha_fall = 255 * (1 - smootherstep(t_fall))
+    col = np.minimum(alpha_rise, alpha_fall).round().astype(np.uint8)
     return np.tile(col.reshape(-1, 1), (1, width))
 
 

@@ -78,23 +78,35 @@ the past as avant-garde.
    opaque-ish gradient behind the nav — `linear-gradient(to bottom, color-mix(in srgb,
    var(--bg) 94%, transparent) 55%, transparent)` at desktop, hardened further to a
    94%-at-62% band under `max-width:980px`. Both read as a hard bar of chrome sitting on
-   top of the photo, at odds with the "fused imagery, not framed" thesis in §2.1. The
-   build has moved away from this twice now:
+   top of the photo, at odds with the "fused imagery, not framed" thesis in §2.1. Final
+   mechanism, after two rounds of correction:
 
-   - Desktop: a softer multi-stop scrim (86%→58%→24%→transparent at 0/42/72/100%)
-     instead of the single 94%-at-55% stop.
-   - `max-width:980px` (wrapped nav): no background at all — it inherits the same soft
-     desktop scrim. Legibility over bright photo areas comes from `text-shadow:0 1px
-     12px color-mix(in srgb, var(--bg) 80%, transparent)` on `nav a`, the same mechanism
-     `.lede` already uses site-wide to sit text over photos without an opaque backing.
-     Where that alone was still marginal (home/contact's pale upper-left wash), `.env`
-     gets `top:5rem` under `max-width:820px` so the portrait begins below the wrapped
-     nav instead of behind it, with `.inner`'s `padding-top` offset by the same amount
-     so content spacing is unchanged.
+   - **No background on nav at any width.** Desktop uses a soft multi-stop scrim
+     (86%→58%→24%→transparent at 0/42/72/100%) painted once, unconditionally; the
+     `max-width:980px` wrapped state does not override it.
+   - **Legibility comes from `text-shadow:0 1px 12px color-mix(in srgb, var(--bg) 80%,
+     transparent)` on `nav a`** — the same mechanism `.lede` already uses site-wide to
+     sit text over photos without an opaque backing.
+   - **The mobile portrait dissolves at its top edge, not just its bottom** (§5's mobile
+     alpha ramp gained a matching rise: 0 at y=0 → 255 by y=14%, plateau to y=50%, falls
+     to 0 by y=99%). The nav sits over this haze instead of a hard photo edge or a flat
+     band of ground. An earlier attempt instead offset `.env`'s `top` below the nav at
+     `max-width:820px` — that was wrong and was reverted: it put the nav on *solid
+     ground*, which is the same opaque-band problem restated, and left a hard horizontal
+     seam where the offset photo began. Do not reintroduce a `.env` top offset here.
+   - **Nav wrap shape at `max-width:980px`:** `.navlist` is a real flex item with
+     `flex-basis:100%` (not `display:contents` at this breakpoint) so it's forced onto
+     its own line — row 1 is brand + language toggle, row 2 is the section links. Below
+     `max-width:520px`, `.navlist` also gets smaller type/gap and `nav` gets tighter
+     side padding, because at small-phone widths the 7 links no longer fit row 2 on one
+     line at full size; if that row wraps internally it produces a 3rd nav row tall
+     enough to sit on fully-opaque photo (the alpha ramp above only clears ~14% of the
+     photo's height, sized for a 2-row nav).
 
-   Net effect: nav is never opaque or near-opaque at any width. Do not "fix" this back
-   to v10's harder gradients by comparing screenshots against `antoniosimon-v10.html` —
-   that would undo an intentional correction, not restore parity.
+   Net effect: nav is never opaque or near-opaque at any width, and the photo is never
+   offset behind it. Do not "fix" this back to v10's harder gradients — or reintroduce a
+   `.env` top offset — by comparing screenshots against `antoniosimon-v10.html`. Both
+   were tried and rejected; this is intentional divergence, not something to restore.
 
 9. **Videos**: click-to-play facade posters (thumbnail + play button → injects
    `youtube-nocookie` iframe with autoplay). Never eager iframes.
@@ -180,8 +192,10 @@ For each portrait, from the EXIF-corrected original:
 
 - **Desktop variant:** native size (~960×1200). Alpha = horizontal smootherstep
   (Perlin: `6t⁵ − 15t⁴ + 10t³`) from x = **2%** (alpha 0) to x = **52%** (alpha 255).
-- **Mobile variant:** resize to 760px wide. Alpha = vertical smootherstep, opaque until
-  y = **50%**, transparent at y = **99%**.
+- **Mobile variant:** resize to 760px wide. Alpha = vertical smootherstep, both ends:
+  **0** at y = **0%**, rising to **255** by y = **14%** (dissolves into the ground behind
+  the fixed nav, not just at the bottom), opaque plateau to y = **50%**, falling to
+  **0** by y = **99%**.
 - **No dither in the alpha** (incompressible; the grain overlay de-bands optically).
 - Export WebP, quality 80 (desktop) / 76 (mobile). As real files with hashed names —
   not base64 (that was a prototype constraint only).

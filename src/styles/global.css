@@ -120,7 +120,33 @@ nav .lang a.on{color:var(--key)}
      the hard bar gone) — text-shadow on nav a carries the legibility */
   nav{flex-wrap:wrap;row-gap:.55rem;padding:.9rem 1.2rem;letter-spacing:.1em}
   nav .lang{order:1;margin-left:auto}
-  nav [data-nav]{order:2}
+  /*
+    Force a clean break: row 1 = brand + lang, row 2 = section links.
+    Without this, .navlist's <a> are individual flex children of nav
+    (via display:contents below) and wrap wherever the line runs out of
+    room — leaving the lang toggle stranded mid-row with e.g. MANIFESTO
+    still fitting behind it. Making .navlist a real flex item with
+    flex-basis:100% forces it onto its own line; its own <li> stay
+    display:contents so the <a> flex directly inside .navlist's own
+    flex context, at the same gap nav uses.
+  */
+  nav .navlist{
+    display:flex;flex-wrap:wrap;gap:clamp(.75rem,1.5vw,1.5rem);
+    flex-basis:100%;order:2;
+  }
+  nav .navlist li{display:contents}
+}
+@media(max-width:520px){
+  /*
+    Below ~520px the 7 links no longer fit on .navlist's single forced
+    line at the default nav type size (measured: overflows to a 3rd nav
+    row, which is tall enough to sit on fully-opaque photo — the mobile
+    alpha ramp only clears by y=14% of the photo's own height, calibrated
+    for a 2-row nav). Tighter type keeps it to one line down to ~375px
+    (measured); reduced nav side padding buys a little more width too.
+  */
+  nav{padding-left:.9rem;padding-right:.9rem}
+  nav .navlist{font-size:.46rem;letter-spacing:.03em;gap:.32rem}
 }
 
 /* ------- pages & photo environments ------- */
@@ -150,15 +176,14 @@ nav .lang a.on{color:var(--key)}
 .env .sharp{position:absolute;top:0;right:0;height:100%;width:auto}
 @media(max-width:820px){
   /*
-    Mechanism B (on top of A's text-shadow): the wrapped nav can sit over
-    a bright photo area (e.g. home/contact's pale upper-left wash) where
-    text-shadow alone is marginal. Measured wrapped-nav height is ~72px
-    (4.5rem) at small-phone widths; 5rem gives it clearance without
-    introducing an opaque band. The portrait begins below the nav and the
-    baked fade runs from there down — .inner's padding-top gets the same
-    5rem added so content spacing is unchanged.
+    Nav legibility over the mobile photo comes from text-shadow on nav a
+    plus the image pipeline's own top-edge dissolve (§5) — the portrait
+    fades into the ground at y=0..14%, so the nav sits over haze, not a
+    hard photo edge. An earlier attempt offset .env below the nav instead;
+    that put the nav on solid ground, which is exactly the opaque-band
+    look this was meant to remove, and left a hard horizontal edge at the
+    photo's new top. Reverted — do not reintroduce a top offset here.
   */
-  .env{top:5rem}
   .env .sharp{top:0;right:auto;left:50%;transform:translateX(-50%);width:100%;height:auto}
   .env .scrim{
     background:linear-gradient(to top, var(--bg) 32%, color-mix(in srgb, var(--bg) 40%, transparent) 52%, transparent 78%);
@@ -173,7 +198,7 @@ nav .lang a.on{color:var(--key)}
 }
 @media(max-width:820px){
   .inner{padding:9.5rem 1.4rem 4rem}
-  .page.has-photo .inner{padding-top:calc(46vh + 5rem);padding-left:1.4rem}
+  .page.has-photo .inner{padding-top:46vh;padding-left:1.4rem}
   .page.has-photo .content{max-width:none}
 }
 
