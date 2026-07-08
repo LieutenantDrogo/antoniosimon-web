@@ -1,0 +1,31 @@
+---
+interface Props {
+  youtubeId: string;
+}
+const { youtubeId } = Astro.props;
+---
+<button class="poster" data-yt={youtubeId} aria-label="Play video">
+  <img src={`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`} alt="" />
+  <span class="play">▶</span>
+</button>
+
+<script>
+  // Bound on astro:page-load, not DOMContentLoaded: inline module scripts
+  // don't re-execute on ClientRouter navigations, so DOMContentLoaded would
+  // only ever fire once per hard load and the facade would be dead on the
+  // Media page after any client-side navigation into it. astro:page-load
+  // fires after every navigation, including the first.
+  function bindPosters() {
+    document.querySelectorAll<HTMLButtonElement>('.poster').forEach((poster) => {
+      poster.addEventListener('click', () => {
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube-nocookie.com/embed/${poster.dataset.yt}?autoplay=1`;
+        iframe.allow = 'autoplay; fullscreen';
+        iframe.allowFullscreen = true;
+        iframe.title = 'Video';
+        poster.parentNode?.replaceChild(iframe, poster);
+      });
+    });
+  }
+  document.addEventListener('astro:page-load', bindPosters);
+</script>

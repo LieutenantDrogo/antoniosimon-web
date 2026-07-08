@@ -1,0 +1,26 @@
+---
+import { routes, navOrder, navLabels } from '../data/routes';
+import type { PageId, Lang } from '../data/routes';
+import LangSwitch from './LangSwitch.astro';
+
+interface Props {
+  pageId: PageId;
+  lang: Lang;
+}
+const { pageId, lang } = Astro.props;
+---
+<nav aria-label={lang === 'en' ? 'Primary' : 'Principal'}>
+  <a class="brand" href={routes.home[lang]}>{navLabels.home[lang]}</a>
+  <ul class="navlist">
+    {navOrder.map((id) => (
+      <li>
+        <a
+          data-nav={id}
+          href={routes[id][lang]}
+          aria-current={id === pageId ? 'page' : undefined}
+        >{navLabels[id][lang]}</a>
+      </li>
+    ))}
+  </ul>
+  <LangSwitch pageId={pageId} lang={lang} />
+</nav>

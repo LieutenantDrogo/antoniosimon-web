@@ -1,0 +1,44 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PhotoEnv from '../components/PhotoEnv.astro';
+import DisplayHeading from '../components/DisplayHeading.astro';
+import RecordList from '../components/RecordList.astro';
+
+const lang = 'en';
+const page = await getEntry('pages', 'about');
+if (!page) throw new Error('Missing pages entry: about');
+const bioEntry = await getEntry('bio', `bio.${lang}`);
+if (!bioEntry) throw new Error('Missing bio entry: en');
+const { Content } = await render(bioEntry);
+
+function ddText(dd: string | { en: string; es: string }): string {
+  return typeof dd === 'string' ? dd : dd[lang];
+}
+const recordRows = bioEntry.data.record.map((row) => ({
+  dt: row.dt[lang],
+  dd: ddText(row.dd),
+}));
+---
+<BaseLayout
+  pageId="about"
+  lang={lang}
+  title="About — Antonio Simón"
+  description={page.data.metaDescription[lang]}
+>
+  <section class="page has-photo">
+    <PhotoEnv slot="about" />
+    <div class="inner">
+      <div class="content">
+        <div class="eyebrow">{page.data.eyebrow[lang]}</div>
+        <DisplayHeading text={page.data.display} />
+        <div class="lede">
+          <Content />
+        </div>
+        {page.data.recordLabel && (
+          <RecordList label={page.data.recordLabel[lang]} rows={recordRows} />
+        )}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

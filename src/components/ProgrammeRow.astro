@@ -1,0 +1,21 @@
+---
+// Renders v10's .prog block. Reused across Programmes (title+desc+meta),
+// Media's Recordings & screen (title+desc, no meta), and Research
+// (title+descHtml, no meta) — matching v10's own reuse of one .prog class.
+interface Props {
+  title: string;
+  desc?: string;
+  descHtml?: string;
+  descClass?: string;
+  meta?: string;
+}
+const { title, desc, descHtml, descClass, meta } = Astro.props;
+const pClass = ['desc', descClass].filter(Boolean).join(' ');
+---
+<div class="prog">
+  <h3>{title}</h3>
+  {descHtml
+    ? <p class={pClass} set:html={descHtml} />
+    : <p class={pClass}>{desc}</p>}
+  {meta && <div class="meta">{meta}</div>}
+</div>

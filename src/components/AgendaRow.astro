@@ -1,0 +1,16 @@
+---
+interface Props {
+  dateLabel: string;
+  what: string;
+  where?: string;
+  sample?: boolean;
+}
+const { dateLabel, what, where, sample = false } = Astro.props;
+---
+<div class:list={['agrow', { sample }]}>
+  <div class="d">{dateLabel}</div>
+  <div>
+    <div class="what">{what}</div>
+    {where && <div class="where">{where}</div>}
+  </div>
+</div>

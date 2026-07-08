@@ -3,40 +3,33 @@ import { getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PhotoEnv from '../components/PhotoEnv.astro';
 import DisplayHeading from '../components/DisplayHeading.astro';
-import { routes } from '../data/routes';
-import images from '../data/images.json';
 
 const lang = 'en';
-const page = await getEntry('pages', 'home');
-if (!page) throw new Error('Missing pages entry: home');
+const page = await getEntry('pages', 'contact');
+if (!page) throw new Error('Missing pages entry: contact');
 const site = await getEntry('site', 'site');
 if (!site) throw new Error('Missing site entry');
 ---
 <BaseLayout
-  pageId="home"
+  pageId="contact"
   lang={lang}
-  title="Antonio Simón — pianist & fortepianist"
+  title="Contact — Antonio Simón"
   description={page.data.metaDescription[lang]}
-  ogImage={images.hero.og}
 >
   <section class="page has-photo">
-    <PhotoEnv slot="hero" />
+    <PhotoEnv slot="contact" />
     <div class="inner">
       <div class="content">
         <div class="eyebrow">{page.data.eyebrow[lang]}</div>
         <DisplayHeading text={page.data.display} />
         <p class="lede">{page.data.lede?.[lang]}</p>
-        <div class="quote">
-          {site.data.quote.text}
-          <span class="who">{site.data.quote.who}</span>
-        </div>
-        <div class="press">
-          {site.data.press.map((item) => <span>{item}</span>)}
-        </div>
+        <a class:list={['bigmail', { todo: site.data.emailTodo }]} href={`mailto:${site.data.email}`}>
+          {site.data.email}
+        </a>
         <div class="cta">
-          {page.data.cta?.map((c) => (
-            <a href={routes[c.page as keyof typeof routes][lang]}>{c.label[lang]}</a>
-          ))}
+          <a class:list={{ todo: site.data.pressKit.todo }} href={site.data.pressKit.path}>
+            {site.data.pressKit.label[lang]}
+          </a>
         </div>
       </div>
     </div>

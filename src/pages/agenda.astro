@@ -1,0 +1,46 @@
+---
+import { getEntry, getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PhotoEnv from '../components/PhotoEnv.astro';
+import DisplayHeading from '../components/DisplayHeading.astro';
+import AgendaRow from '../components/AgendaRow.astro';
+
+const lang = 'en';
+const page = await getEntry('pages', 'agenda');
+if (!page) throw new Error('Missing pages entry: agenda');
+const rows = (await getCollection('agenda')).sort((a, b) => a.data.order - b.data.order);
+
+function whereText(where: string | { en: string; es: string } | undefined): string | undefined {
+  if (where === undefined) return undefined;
+  return typeof where === 'string' ? where : where[lang];
+}
+---
+<BaseLayout
+  pageId="agenda"
+  lang={lang}
+  title="Agenda — Antonio Simón"
+  description={page.data.metaDescription[lang]}
+>
+  <section class="page has-photo">
+    <PhotoEnv slot="agenda" />
+    <div class="inner">
+      <div class="content">
+        <div class="eyebrow">{page.data.eyebrow[lang]}</div>
+        <DisplayHeading text={page.data.display} />
+        <div style="margin-top:2.4rem">
+          {rows.map((row) => (
+            <AgendaRow
+              dateLabel={row.data.dateLabel[lang]}
+              what={row.data.what[lang]}
+              where={whereText(row.data.where)}
+              sample={row.data.sample}
+            />
+          ))}
+        </div>
+        {page.data.note && (
+          <p class="small dim" style="margin-top:2rem">{page.data.note[lang]}</p>
+        )}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

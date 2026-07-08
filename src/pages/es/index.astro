@@ -1,12 +1,12 @@
 ---
 import { getEntry } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import PhotoEnv from '../components/PhotoEnv.astro';
-import DisplayHeading from '../components/DisplayHeading.astro';
-import { routes } from '../data/routes';
-import images from '../data/images.json';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PhotoEnv from '../../components/PhotoEnv.astro';
+import DisplayHeading from '../../components/DisplayHeading.astro';
+import { routes } from '../../data/routes';
+import images from '../../data/images.json';
 
-const lang = 'en';
+const lang = 'es';
 const page = await getEntry('pages', 'home');
 if (!page) throw new Error('Missing pages entry: home');
 const site = await getEntry('site', 'site');
@@ -15,7 +15,7 @@ if (!site) throw new Error('Missing site entry');
 <BaseLayout
   pageId="home"
   lang={lang}
-  title="Antonio Simón — pianist & fortepianist"
+  title="Antonio Simón — pianista y fortepianista"
   description={page.data.metaDescription[lang]}
   ogImage={images.hero.og}
 >

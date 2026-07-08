@@ -1,0 +1,14 @@
+---
+import { routes } from '../data/routes';
+import type { PageId, Lang } from '../data/routes';
+
+interface Props {
+  pageId: PageId;
+  lang: Lang;
+}
+const { pageId, lang } = Astro.props;
+---
+<span class="lang">
+  <a href={routes[pageId].en} class:list={{ on: lang === 'en' }}>EN</a>
+  <a href={routes[pageId].es} class:list={{ on: lang === 'es' }}>ES</a>
+</span>

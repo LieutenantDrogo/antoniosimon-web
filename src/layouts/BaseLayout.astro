@@ -1,0 +1,57 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import { routes } from '../data/routes';
+import type { PageId, Lang } from '../data/routes';
+
+interface Props {
+  pageId: PageId;
+  lang: Lang;
+  title: string;
+  description: string;
+  ogImage?: string;
+}
+const { pageId, lang, title, description, ogImage } = Astro.props;
+
+const canonical = new URL(routes[pageId][lang], Astro.site);
+const altEn = new URL(routes[pageId].en, Astro.site);
+const altEs = new URL(routes[pageId].es, Astro.site);
+const ogImageUrl = ogImage ? new URL(ogImage, Astro.site) : undefined;
+---
+<html lang={lang} data-page={pageId}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="theme-color" content="#0f0f0a" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+
+  <link rel="canonical" href={canonical} />
+  <link rel="alternate" hreflang="en" href={altEn} />
+  <link rel="alternate" hreflang="es" href={altEs} />
+  <link rel="alternate" hreflang="x-default" href={altEn} />
+
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
+
+  <link rel="preload" href="/fonts/instrument-serif-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/archivo-400.woff2" as="font" type="font/woff2" crossorigin />
+
+  <ClientRouter />
+</head>
+<body>
+  <Nav pageId={pageId} lang={lang} />
+  <slot />
+  <footer>© Antonio Simón · antoniosimon.es</footer>
+</body>
+</html>

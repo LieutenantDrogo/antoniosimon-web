@@ -1,0 +1,18 @@
+---
+interface Props {
+  label: string;
+  rows: { dt: string; dd: string }[];
+}
+const { label, rows } = Astro.props;
+---
+<div class="record">
+  <h4>{label}</h4>
+  <dl>
+    {rows.map((row) => (
+      <>
+        <dt>{row.dt}</dt>
+        <dd>{row.dd}</dd>
+      </>
+    ))}
+  </dl>
+</div>

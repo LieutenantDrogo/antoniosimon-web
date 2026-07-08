@@ -1,5 +1,6 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
 import { file, glob } from 'astro/loaders';
+import { z } from 'astro/zod';
 
 const bilingual = z.object({ en: z.string(), es: z.string() });
 const stringOrBilingual = z.union([z.string(), bilingual]);
