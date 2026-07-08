@@ -74,6 +74,28 @@ the past as avant-garde.
 8. **Nav**: fixed; fluid `clamp()` type/gaps; wraps below 980px (brand + language toggle
    row, sections flowing beneath); no hamburger; active section underlined in key color.
 
+   **Divergence from v10 (v10 is NOT ground truth for nav background):** v10 used an
+   opaque-ish gradient behind the nav — `linear-gradient(to bottom, color-mix(in srgb,
+   var(--bg) 94%, transparent) 55%, transparent)` at desktop, hardened further to a
+   94%-at-62% band under `max-width:980px`. Both read as a hard bar of chrome sitting on
+   top of the photo, at odds with the "fused imagery, not framed" thesis in §2.1. The
+   build has moved away from this twice now:
+
+   - Desktop: a softer multi-stop scrim (86%→58%→24%→transparent at 0/42/72/100%)
+     instead of the single 94%-at-55% stop.
+   - `max-width:980px` (wrapped nav): no background at all — it inherits the same soft
+     desktop scrim. Legibility over bright photo areas comes from `text-shadow:0 1px
+     12px color-mix(in srgb, var(--bg) 80%, transparent)` on `nav a`, the same mechanism
+     `.lede` already uses site-wide to sit text over photos without an opaque backing.
+     Where that alone was still marginal (home/contact's pale upper-left wash), `.env`
+     gets `top:5rem` under `max-width:820px` so the portrait begins below the wrapped
+     nav instead of behind it, with `.inner`'s `padding-top` offset by the same amount
+     so content spacing is unchanged.
+
+   Net effect: nav is never opaque or near-opaque at any width. Do not "fix" this back
+   to v10's harder gradients by comparing screenshots against `antoniosimon-v10.html` —
+   that would undo an intentional correction, not restore parity.
+
 9. **Videos**: click-to-play facade posters (thumbnail + play button → injects
    `youtube-nocookie` iframe with autoplay). Never eager iframes.
 
