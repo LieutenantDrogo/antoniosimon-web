@@ -1,0 +1,26 @@
+liszt-sonata-b-minor:
+  title:
+    en: "Liszt — Sonata in B minor, on period instruments"
+    es: "Liszt — Sonata en si menor, con instrumentos de época"
+  desc:
+    en: "The first recording of its kind."
+    es: "La primera grabación de este tipo."
+  order: 1
+
+liszt-cello-piano:
+  title:
+    en: "Liszt — Complete works for cello & piano"
+    es: "Liszt — Obra completa para violonchelo y piano"
+  desc:
+    en: "With Trino Zurita."
+    es: "Con Trino Zurita."
+  order: 2
+
+scarlatti-pbs:
+  title:
+    en: "Scarlatti — PBS, Now Hear This"
+    es: "Scarlatti — PBS, Now Hear This"
+  desc:
+    en: "A central role in the Scarlatti episode, at the piano and the harpsichord — a New York Times critics’ pick."
+    es: "Un papel central en el episodio dedicado a Scarlatti, al piano y al clave — destacado por The New York Times."
+  order: 3

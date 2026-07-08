@@ -1,0 +1,18 @@
+hero:
+  youtubeId: "lOF9U-MJnAA"
+  todo: true
+  caption:
+    en: "[Piece — instrument — venue. Caption to be written.]"
+    es: "[Obra — instrumento — sala. Pendiente de redactar.]"
+  order: 1
+
+modern-piano:
+  youtubeId: "uA1FBEk8QI4"
+  locked: true
+  captionBold:
+    en: "Same grammar, modern instrument."
+    es: "La misma gramática, instrumento moderno."
+  captionRest:
+    en: "The practice is not tied to the hardware."
+    es: "La práctica no depende del instrumento."
+  order: 2

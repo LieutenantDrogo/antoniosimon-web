@@ -1,0 +1,35 @@
+beyond-legato-lecture:
+  title:
+    en: "Beyond Legato — the sustain pedal as dramatic agent"
+    es: "Más allá del legato — el pedal de resonancia como agente dramático"
+  descHtml:
+    en: 'Lecture, Perugia Historical Piano International Forum, 2026. <span class="todo">[Video link]</span>'
+    es: 'Conferencia, Perugia Historical Piano International Forum, 2026. <span class="todo">[Enlace al vídeo]</span>'
+  order: 1
+
+reading-the-rolls:
+  title:
+    en: "Reading the rolls"
+    es: "Leer los rollos"
+  descHtml:
+    en: 'An ongoing computational study of reproducing piano rolls — tempo, rubato and chord asynchrony measured against the score. <span class="todo">[Link]</span>'
+    es: 'Un estudio computacional en curso de los rollos de pianola: tempo, rubato y asincronía de acordes medidos contra la partitura. <span class="todo">[Enlace]</span>'
+  order: 2
+
+doctoral-thesis:
+  title:
+    en: "Doctoral thesis"
+    es: "Tesis doctoral"
+  descHtml:
+    en: 'Mariano Soriano Fuertes Prize in Musicology. <span class="todo">[Title &amp; link]</span>'
+    es: 'Premio Mariano Soriano Fuertes de Musicología. <span class="todo">[Título y enlace]</span>'
+  order: 3
+
+selected-writing:
+  title:
+    en: "Selected writing"
+    es: "Escritos seleccionados"
+  descHtml:
+    en: '<span class="todo">[Two or three articles, max.]</span>'
+    es: '<span class="todo">[Dos o tres artículos, como máximo.]</span>'
+  order: 4

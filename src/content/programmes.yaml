@@ -1,0 +1,51 @@
+the-last-word:
+  title:
+    en: "The Last Word — Beethoven, op. 111"
+    es: "La última palabra — Beethoven, op. 111"
+  desc:
+    en: "A twenty-minute talk, then the complete sonata. What the sources permit — and what they demand."
+    es: "Veinte minutos de charla y, después, la sonata completa. Lo que las fuentes permiten — y lo que exigen."
+  duration: "70 min"
+  forces:
+    en: "solo · fortepiano (Graf copy) or modern piano"
+    es: "solo · fortepiano (copia Graf) o piano moderno"
+  order: 1
+
+beyond-legato:
+  title:
+    en: "Beyond Legato"
+    es: "Más allá del legato"
+  desc:
+    en: "The sustain pedal as dramatic agent: from Beethoven’s shadows to Liszt’s halos."
+    es: "El pedal de resonancia como agente dramático: de las sombras de Beethoven a los halos de Liszt."
+  duration: "60–75 min"
+  forces:
+    en: "solo · period or modern piano"
+    es: "solo · piano de época o moderno"
+  order: 2
+
+liszt-complete:
+  title:
+    en: "Liszt, Complete"
+    es: "Liszt, íntegro"
+  desc:
+    en: "The complete works for cello and piano, with Trino Zurita. Recorded; available as one or two programmes."
+    es: "La obra completa para violonchelo y piano, con Trino Zurita. Grabada; disponible como uno o dos programas."
+  duration: "60–120 min"
+  forces:
+    en: "duo · period or modern instruments"
+    es: "dúo · instrumentos de época o modernos"
+  order: 3
+
+roll-generation:
+  title:
+    en: "The Roll Generation"
+    es: "La generación de los rollos"
+  desc:
+    en: "Lecture-recital on the reproducing piano rolls: the last living witnesses of Romantic playing."
+    es: "Conferencia-concierto sobre los rollos de pianola: los últimos testigos vivos del piano romántico."
+  duration: "60 min"
+  forces:
+    en: "solo · modern piano or fortepiano"
+    es: "solo · piano moderno o fortepiano"
+  order: 4

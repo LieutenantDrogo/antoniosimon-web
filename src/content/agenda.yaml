@@ -1,0 +1,32 @@
+2026-stanford:
+  dateLabel:
+    en: "2026 · date TBC"
+    es: "2026 · por confirmar"
+  what:
+    en: "Beethoven op. 111 — lecture-recital"
+    es: "Beethoven op. 111 — conferencia-concierto"
+  where: "Stanford University, California"
+  tbc: true
+  order: 1
+
+sample-1:
+  dateLabel: { en: "—", es: "—" }
+  what:
+    en: "[Programme]"
+    es: "[Programa]"
+  where:
+    en: "[Venue · City]"
+    es: "[Sala · Ciudad]"
+  sample: true
+  order: 2
+
+sample-2:
+  dateLabel: { en: "—", es: "—" }
+  what:
+    en: "[Programme]"
+    es: "[Programa]"
+  where:
+    en: "[Venue · City]"
+    es: "[Sala · Ciudad]"
+  sample: true
+  order: 3

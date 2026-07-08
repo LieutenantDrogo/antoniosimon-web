@@ -1,0 +1,101 @@
+home:
+  eyebrow:
+    en: "Pianist & fortepianist"
+    es: "Pianista y fortepianista"
+  display: "Antonio Simón"
+  lede:
+    en: "The Romantic repertoire in its own forgotten grammar — dislocated, arpeggiated, dramatically pedalled. On fortepianos, and on the modern piano."
+    es: "El repertorio romántico en su propia gramática olvidada: manos disociadas, acordes arpegiados, pedal dramático. Con fortepianos, y con el piano moderno."
+  metaDescription:
+    en: "Antonio Simón — pianist & fortepianist. The Romantic repertoire in its own forgotten grammar, on fortepianos and the modern piano."
+    es: "Antonio Simón — pianista y fortepianista. El repertorio romántico en su propia gramática olvidada, con fortepianos y piano moderno."
+  cta:
+    - label: { en: "Watch", es: "Ver y escuchar" }
+      page: media
+    - label: { en: "Programmes", es: "Programas" }
+      page: programmes
+
+manifesto:
+  eyebrow:
+    en: "Manifesto"
+    es: "Manifiesto"
+  display: "Torniamo all’antico"
+  displayItalic: true
+  metaDescription:
+    en: "Torniamo all’antico: the past is the avant-garde. A manifesto for playing the Romantic repertoire in its own suppressed grammar."
+    es: "Torniamo all’antico: el pasado es la vanguardia. Un manifiesto para tocar el repertorio romántico en su gramática suprimida."
+
+programmes:
+  eyebrow:
+    en: "Programmes"
+    es: "Programas"
+  display: "Built to travel"
+  lede:
+    en: "Each programme is a finished product: titled, timed, with forces and instrument requirements stated. All of them travel — on period instruments where the hall allows it, on the modern piano where it doesn’t."
+    es: "Cada programa es un producto terminado: con título, duración, plantilla y requisitos de instrumento. Todos viajan: con instrumentos de época cuando la sala lo permite, y con piano moderno cuando no."
+  metaDescription:
+    en: "Four touring programmes for festivals and concert series — titled, timed, with forces and instrument requirements stated."
+    es: "Cuatro programas de gira para festivales y temporadas — con título, duración, plantilla y requisitos de instrumento."
+  notebox:
+    en: "Original fortepianos and copies from my own collection can travel to the venue. Ask."
+    es: "Los fortepianos de mi colección —originales y copias— pueden desplazarse a la sala. Pregúnteme."
+
+agenda:
+  eyebrow:
+    en: "Agenda"
+    es: "Agenda"
+  display: "Agenda"
+  metaDescription:
+    en: "Upcoming concerts and lecture-recitals by pianist and fortepianist Antonio Simón."
+    es: "Próximos conciertos y conferencias-concierto del pianista y fortepianista Antonio Simón."
+  note:
+    en: "For the updated agenda or to propose a date, write to me."
+    es: "Para la agenda actualizada o para proponer una fecha, escríbame."
+
+media:
+  eyebrow:
+    en: "Media"
+    es: "Medios"
+  display: "Listen first"
+  metaDescription:
+    en: "Watch and listen: lecture-recitals, recordings and screen appearances by Antonio Simón."
+    es: "Vea y escuche: conferencias-concierto, grabaciones y apariciones en pantalla de Antonio Simón."
+  reclistEyebrow:
+    en: "Recordings & screen"
+    es: "Grabaciones y pantalla"
+
+research:
+  eyebrow:
+    en: "Research"
+    es: "Investigación"
+  display: "The evidence"
+  lede:
+    en: "The playing rests on sources: treatises, early recordings, reproducing piano rolls. A selection of the work behind it."
+    es: "La interpretación se apoya en fuentes: tratados, primeras grabaciones, rollos de pianola. Una selección del trabajo que hay detrás."
+  metaDescription:
+    en: "The scholarship behind the playing: treatises, early recordings and reproducing piano rolls."
+    es: "La investigación detrás de la interpretación: tratados, primeras grabaciones y rollos de pianola."
+
+about:
+  eyebrow:
+    en: "About"
+    es: "Biografía"
+  display: "Antonio Simón"
+  metaDescription:
+    en: "Antonio Simón plays the Romantic repertoire the way its first audiences heard it. Biography, formation and record."
+    es: "Antonio Simón toca el repertorio romántico como lo escucharon sus primeros públicos. Biografía, formación y trayectoria."
+  recordLabel:
+    en: "Record"
+    es: "Datos"
+
+contact:
+  eyebrow:
+    en: "Contact"
+    es: "Contacto"
+  display: "Talk to me"
+  lede:
+    en: "Booking, programmes, instruments, press."
+    es: "Contratación, programas, instrumentos, prensa."
+  metaDescription:
+    en: "Contact Antonio Simón for booking, programmes, instruments and press."
+    es: "Contacte con Antonio Simón para contratación, programas, instrumentos y prensa."
