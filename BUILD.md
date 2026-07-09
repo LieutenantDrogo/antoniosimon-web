@@ -73,58 +73,76 @@ the past as avant-garde.
 
 8. **Nav**: fixed; fluid `clamp()` type/gaps; wraps below 980px (brand + language toggle
    row, sections flowing beneath); no hamburger; active section underlined in key color.
-
-   **Divergence from v10 (v10 is NOT ground truth for nav background):** v10 used an
-   opaque-ish gradient behind the nav — `linear-gradient(to bottom, color-mix(in srgb,
-   var(--bg) 94%, transparent) 55%, transparent)` at desktop, hardened further to a
-   94%-at-62% band under `max-width:980px`. Both read as a hard bar of chrome sitting on
-   top of the photo, at odds with the "fused imagery, not framed" thesis in §2.1. Final
-   mechanism, after two rounds of correction:
-
-   - **No background on nav at any width.** Desktop uses a soft multi-stop scrim
-     (86%→58%→24%→transparent at 0/42/72/100%) painted once, unconditionally; the
-     `max-width:980px` wrapped state does not override it.
-   - **Legibility comes from `text-shadow:0 1px 12px color-mix(in srgb, var(--bg) 80%,
-     transparent)` on `nav a`** — the same mechanism `.lede` already uses site-wide to
-     sit text over photos without an opaque backing.
-   - **The mobile portrait dissolves at its top edge, not just its bottom** (§5's mobile
-     alpha ramp gained a matching rise: 0 at y=0 → 255 by y=14%, plateau to y=50%, falls
-     to 0 by y=99%). The nav sits over this haze instead of a hard photo edge or a flat
-     band of ground. An earlier attempt instead offset `.env`'s `top` below the nav at
-     `max-width:820px` — that was wrong and was reverted: it put the nav on *solid
-     ground*, which is the same opaque-band problem restated, and left a hard horizontal
-     seam where the offset photo began. Do not reintroduce a `.env` top offset here.
-   - **Nav wrap shape at `max-width:980px`:** `.navlist` is a real flex item with
-     `flex-basis:100%` (not `display:contents` at this breakpoint) so it's forced onto
-     its own line — row 1 is brand + language toggle, row 2 is the section links. Below
-     `max-width:520px`, `.navlist` also gets smaller type/gap and `nav` gets tighter
-     side padding, because at small-phone widths the 7 links no longer fit row 2 on one
-     line at full size; if that row wraps internally it produces a 3rd nav row tall
-     enough to sit on fully-opaque photo (the alpha ramp above only clears ~14% of the
-     photo's height, sized for a 2-row nav).
-
-   Net effect: nav is never opaque or near-opaque at any width, and the photo is never
-   offset behind it. Do not "fix" this back to v10's harder gradients — or reintroduce a
-   `.env` top offset — by comparing screenshots against `antoniosimon-v10.html`. Both
-   were tried and rejected; this is intentional divergence, not something to restore.
+   v10 is not ground truth for the nav backdrop — see "Divergences from v10" below.
 
 9. **Videos**: click-to-play facade posters (thumbnail + play button → injects
    `youtube-nocookie` iframe with autoplay). Never eager iframes.
 
-## 3. Architecture
+## Divergences from v10
 
-- **Framework:** Astro (latest), static output. Zero client JS except the video facade
-  (a few lines, inline or tiny module). The prototype's JS "tab router" disappears —
-  sections become real routed pages.
-- **View Transitions:** use Astro's ClientRouter/View Transitions so the color-world
-  modulation between sections survives the move to real pages (by default a hard page
-  load would snap palettes instantly — the ~.7s melt between grounds is part of the
-  design, a key change between movements). Transition `color` and `border-color` at the
-  same tempo as `background-color` so the whole ecosystem mutates together, not just
-  the ground. Degrades gracefully to instant swaps where the API is unsupported.
-- **Hosting:** GitHub (private repo) → Cloudflare Pages, build on push.
+Collected here rather than scattered through §2 — v10 is not ground truth for either of
+these; do not "fix" them back by comparing screenshots against `antoniosimon-v10.html`.
+
+- **Nav backdrop & mobile photo dissolve.** v10's nav sat on an opaque-ish gradient
+  (`color-mix(..., 94%, transparent)` bands) that read as a hard bar of chrome over the
+  photo. Final: no background on nav at any width; legibility comes from `text-shadow`
+  on `nav a` (the same mechanism `.lede` uses everywhere else); the mobile portrait's
+  alpha now ramps up from 0 at its own top edge too, not just down at the bottom (§5),
+  so the nav sits over haze rather than a flat band. **Rejected:** offsetting `.env`'s
+  `top` below the wrapped nav — that just puts the nav on solid ground (the same problem
+  restated) plus a hard seam at the photo's new top edge.
+- **Ground/ink lives on `<html>`, not `<body>`.** v10 was a single-page app with one
+  `<body>` for its whole life, so `body{transition:background-color .7s}` was enough.
+  Astro's ClientRouter fully replaces `<body>` on every navigation — only `<html>`
+  persists — so the per-page custom properties and that CSS transition had to move
+  there. `color`/`border-color` transition via the view-transition root crossfade
+  instead (§3), since a freshly-inserted body has no prior value to transition from.
+
+## 3. Architecture (as built)
+
+- **Framework:** Astro 7 (`astro@^7.0.7`), static output. Zero client JS except
+  `VideoPoster.astro`'s facade script and `<ClientRouter />` itself. The prototype's JS
+  "tab router" is gone — the 8 sections are real routed `.astro` pages.
+- **Content:** Content Layer API, collections defined in `src/content.config.ts` (the
+  Astro 7 location — not the legacy `src/content/config.ts`). See "Content model" below.
+- **View Transitions: adopted**, not optional. Astro's `<ClientRouter />` preserves the
+  cross-page color-world crossfade of the prototype instead of a hard page-load snap.
+  Mechanism:
+  - `html[data-page="…"]` (not `body` — see "Divergences from v10") holds the per-page
+    `--bg/--ink/--key/--dim` custom properties. `<html>` persists across navigation and
+    Astro rewrites its attributes per route, so this is always correct, never stale.
+  - The `.7s var(--ease)` melt is delivered by two mechanisms at the same tempo:
+    `background-color` as a real CSS `transition` on `html` (survives because `html`
+    persists), and `color`/`border-color` via Astro's view-transition root crossfade —
+    `::view-transition-old(root), ::view-transition-new(root){animation-duration:.7s;
+    animation-timing-function:var(--ease)}` — since a freshly-inserted `body` has no
+    prior computed value to transition *from*.
+  - `prefers-reduced-motion`: the `html` transition is dropped (`transition:none`), and
+    ClientRouter's own reduced-motion handling disables the view-transition crossfade —
+    both independently, so reduced motion means a hard instant swap, not a fake-fast one.
+  - The dislocation echo (§2.3) re-runs once per navigation for free: `.display::before`
+    is a fresh element on every route (body is fully replaced), and its `animation`
+    has no `infinite` — one play per mount, including back/forward, never zero, never
+    more than one.
+- **Hosting:** GitHub (private repo) → Cloudflare Pages, build on push. *(Not yet done —
+  session 2; see §8.)*
 - **Domain:** antoniosimon.es (live; currently a single-page hero — identify registrar/
   DNS before cutover; site stays live until the new build is approved on `*.pages.dev`).
+  *(Not yet done — session 2; see §8.)*
+
+### Stack (pinned)
+
+- **Node 26.x** (installed via Homebrew on the build machine; `package.json` `engines`
+  requires `>=22.12.0`, so any current LTS/latest works — 26 is what was actually used).
+- **Astro `^7.0.7`**, `@astrojs/sitemap@^3.7.3`.
+- **TypeScript `^6.0.3`**, `@astrojs/check@^0.9.9` — `npx astro check` is the typecheck
+  entrypoint; `astro/tsconfigs/strict` as the base config.
+- **`@fontsource/instrument-serif` / `@fontsource/archivo`** — devDependencies only. Used
+  once to extract self-hosted WOFF2 into `public/fonts/`; never imported at runtime, so
+  they don't ship in the built site.
+- **Python 3.9 + Pillow + numpy**, in a local `.venv` (`scripts/requirements.txt`).
+  Manual-only (`npm run images`) — never part of `astro build`, so Cloudflare's build
+  environment never needs Python.
 
 ### Routes
 
@@ -141,30 +159,61 @@ English is primary (root); Spanish mirrors under `/es/` with localized slugs:
 /contact     /es/contacto
 ```
 
-`hreflang` pairs on every page; canonical per language; the language toggle maps the
-*current* page to its counterpart slug (not to the home page).
+(`src/pages/*.astro` for English, `src/pages/es/*.astro` for Spanish — one file per
+route, no dynamic `[...slug]` catch-all.) `hreflang` pairs on every page; canonical per
+language; the language toggle (`LangSwitch.astro`) maps the *current* page to its
+counterpart slug via a shared `routes` map in `src/data/routes.ts` — never to home.
 
-### Components (suggested)
+### Components
 
-`BaseLayout` (head, fonts, grain, footer) · `Nav` · `PhotoEnv` (ambient layer +
-`<picture>` sharp + scrim) · `DisplayHeading` (echo via `data-text`) · `ProgrammeRow` ·
-`AgendaRow` · `RecordList` · `VideoPoster` · `LangSwitch`.
+`src/components/`: `Nav` (semantic `<ul>`/`<a href>`, `aria-current="page"`, wraps
+`LangSwitch`) · `LangSwitch` · `PhotoEnv` (amb + scrim + `<picture>`, reads
+`src/data/images.json` for the pipeline's per-slot paths/alt/filter) · `DisplayHeading`
+(echo via `data-text`, `italic` prop for the manifesto title) · `ProgrammeRow` (reused
+for Programmes' title+desc+meta rows, Media's Recordings & screen list, and Research's
+title+descHtml list — one component, three call shapes, matching v10's own reuse of a
+single `.prog` class) · `AgendaRow` · `RecordList` · `VideoPoster` (facade button, binds
+its click handler on `astro:page-load` — `DOMContentLoaded` doesn't refire on
+client-side navigations, so the Media page's video facade would go dead after any
+client-side nav into it otherwise). `src/layouts/BaseLayout.astro` holds `<head>`,
+fonts, grain, `<Nav>`, `<footer>`, `<ClientRouter />`.
 
 ### Content model (edited by Antonio, no code)
 
+Content Layer collections in `src/content.config.ts`. Two loader shapes: `file()` for
+YAML — as an object keyed by id (`{id: {...fields}}`), not an array, per the loader's
+own requirement for unique ids — and `glob()` for the per-language Markdown, with an
+explicit `generateId` (`manifesto.en.md` → id `manifesto.en`).
+
 ```
 src/content/
-  agenda.yaml        # [{date, dateLabel: {en,es}, what: {en,es}, where, city, tbc?}]
-  programmes.yaml    # [{title:{en,es}, desc:{en,es}, duration, forces:{en,es}, order}]
-  research.yaml      # [{title:{en,es}, desc:{en,es}, url?, year?}]
-  recordings.yaml    # [{title:{en,es}, desc:{en,es}, url?}]
-  manifesto.en.md    manifesto.es.md
-  bio.en.md          bio.es.md
-  site.yaml          # email, press-kit path, press strip items, pull quote
+  agenda.yaml       # {id: {dateLabel:{en,es}, what:{en,es}, where?: string|{en,es},
+                    #      tbc?, sample?, order}}
+  programmes.yaml   # {id: {title:{en,es}, desc:{en,es}, duration, forces:{en,es}, order}}
+  research.yaml     # {id: {title:{en,es}, descHtml:{en,es}, order}}
+  recordings.yaml   # {id: {title:{en,es}, desc:{en,es}, order}}
+  videos.yaml       # {id: {youtubeId, todo?, caption?:{en,es}, locked?,
+                     #      captionBold?:{en,es}, captionRest?:{en,es}, order}}
+  pages.yaml        # {pageId: {eyebrow:{en,es}, display, displayItalic?, lede?:{en,es},
+                     #          metaDescription:{en,es}, cta?, notebox?, note?,
+                     #          reclistEyebrow?, recordLabel?}}
+  manifesto.en.md   manifesto.es.md
+  bio.en.md         bio.es.md   # frontmatter: record: [{dt:{en,es}, dd: string|{en,es}}]
+  site.yaml         # {site: {email, emailTodo?, pressKit:{path,todo?,label:{en,es}},
+                     #        press: string[], quote:{text,who}}}
 ```
 
-Adding a concert = adding four lines to `agenda.yaml` (GitHub web editor is enough);
-push triggers rebuild (~1 min).
+`agenda.yaml`'s `sample:true` rows render at `.agrow.sample` (opacity `.38`) — the two
+`[Programme]/[Venue · City]` placeholder rows. `pages.yaml` and `videos.yaml` are
+extensions beyond what §3 originally specified: `pages.yaml` holds each page's hero
+copy and meta description (nowhere else to put per-page strings that aren't a list);
+`videos.yaml` holds the two YouTube IDs and their captions (one `.todo`, one locked per
+§4). The About "Record/Datos" definition list lives in `bio.*.md` frontmatter rather
+than its own collection, since it's specific to one page and one document per language
+already exists there.
+
+Adding a concert = adding a new keyed block to `agenda.yaml` (GitHub web editor is
+enough); push triggers rebuild (~1 min).
 
 ## 4. Assets
 
@@ -214,11 +263,11 @@ aspect rendering means the fade can never be cropped off.
 - Per-page meta descriptions in both languages (write from existing copy).
 - Nav is semantic navigation: a `<ul>` of real `<a href>` anchors (not buttons),
   `aria-current="page"` on the active item, inside `<nav aria-label>`.
-- **Optional — decide during build:** Astro View Transitions to preserve the
-  cross-page color-world crossfade of the prototype. If adopted, `color` and
-  `border-color` must transition at the same tempo as `background-color` — the
-  whole ecosystem mutates together. If not adopted, plain page loads are fine;
-  do not fake it with JS.
+- **View Transitions: adopted.** Astro's `<ClientRouter />` preserves the cross-page
+  color-world crossfade of the prototype instead of a hard page-load snap; the
+  `html[data-page]` mechanism and the `.7s` split (CSS transition on `<html>` for
+  `background-color`, view-transition crossfade for `color`/`border-color`) are
+  specified in full in §3.
 - The dislocation echo stays static (drift-in on page load only). No cursor
   parallax, no scroll-triggered re-animation — the stillness is intentional.
 - `prefers-reduced-motion`: disables echo drift and page fade.
