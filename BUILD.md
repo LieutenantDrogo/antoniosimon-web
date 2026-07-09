@@ -294,11 +294,74 @@ aspect rendering means the fade can never be cropped off.
 
 ## 8. Migration & cutover
 
-1. Build in repo; deploy previews on `*.pages.dev`.
+1. Build in repo; deploy previews on `*.pages.dev`. **Done — session 2, as built below.**
 2. Antonio reviews against v10 side by side (desktop wide, desktop narrow, mobile).
 3. Identify current DNS control for antoniosimon.es; add domain to Cloudflare Pages.
 4. Cut DNS. Old single-page site retires; no redirects needed (root-only site).
 5. Post-launch: submit sitemap to Search Console.
+
+### 8.1 Deploy config (session 2, as built)
+
+- **Repo:** GitHub, private, `LieutenantDrogo/antoniosimon-web`, pushed over SSH.
+  `.gitignore` covers `node_modules/`, `dist/`, `.astro/`, `.venv/`, `.DS_Store` — none
+  of those were ever tracked. `public/img/*.webp` (16 files, baked alpha per §5) and
+  `public/fonts/*.woff2` (5 files) are committed output, since the Cloudflare build
+  runs neither the Python image pipeline nor `@fontsource`'s extraction step.
+- **Cloudflare Pages:** connected via the dashboard's "Connect to Git" flow (the GitHub
+  App authorization and initial project creation need a human in the browser — not
+  automatable from the CLI/API side alone). Framework preset Astro; **build command**
+  `npm run build`; **output directory** `dist`. Auto-deploys on every push to `main`.
+- **Env vars** (Production, in the Pages project settings):
+  - `NODE_VERSION=26` — pins the build image to match the local dev machine (§3's
+    "Stack"); `package.json` `engines.node` only requires `>=22.12.0`, so this is a
+    pin for parity, not a hard requirement.
+  - `NOINDEX=true` — see below.
+- **Preview noindex:** `<meta name="robots" content="noindex,nofollow">` in
+  `BaseLayout.astro`, plus `src/pages/robots.txt.ts` (an Astro endpoint, not a static
+  file, so it can read the same flag) emitting `Disallow: /`. Both gated on
+  `import.meta.env.NOINDEX === 'true'`. The `*.pages.dev` subdomain always serves the
+  Production deployment, and there's no separate preview-vs-prod-domain distinction
+  until a custom domain is attached (session 3) — so the flag has to live on the
+  Production environment now, not a Preview-only one.
+  **Cutover (session 3):** in the Pages project's Production environment variables,
+  delete `NOINDEX` (or set it to anything other than `'true'`) and trigger a redeploy —
+  a one-line dashboard change, no code change. `robots.txt` flips to a permissive
+  `Allow: /` + sitemap pointer automatically, since it reads the same flag.
+- **Asset caching:** `public/_headers` (Cloudflare Pages' header-rules file) sets
+  `Cache-Control: public, max-age=31536000, immutable` on `/_astro/*` (Astro's
+  build-hashed JS/CSS), `/img/*` (hashed WebP names per §5), and `/fonts/*`
+  (unhashed, but self-hosted static files that only change via a manual repo edit).
+  Without this, Cloudflare's default is `max-age=0, must-revalidate` even on
+  content-hashed paths.
+- **Accessibility fix:** `BaseLayout.astro`'s `<slot />` is wrapped in `<main>` — a
+  Lighthouse pass against the deployed preview caught a missing landmark region that
+  didn't show up in local dev testing.
+- **Verified on the deployed URL** (`https://antoniosimon-web.pages.dev/`): all 16
+  routes 200 (Cloudflare 308s the extensionless path to the trailing-slash version,
+  standard static-host behavior, not a bug); hreflang/canonical pairs correct on
+  sampled EN/ES/document pages; fonts served same-origin with no `fonts.googleapis.com`
+  references; `<picture>`/`<source media>` mobile-variant markup present; two-register
+  rule holds (`programmes` has no `<picture>`, `agenda` does); sitemap lists all 16
+  URLs. **Not directly click-tested** (no connected browser session in this pass):
+  ClientRouter's cross-page color-world crossfade and the video facade's
+  click-to-iframe swap. Both were confirmed statically — `ClientRouter`'s script tag
+  and `astro-view-transitions-*` meta tags are present in the HTML, and the video
+  poster buttons + their `astro:page-load`-bound inline script are present verbatim —
+  but that's not the same as watching the crossfade or the iframe injection happen.
+  Worth a manual look before Antonio's device review (step 2).
+- **Lighthouse** (mobile + desktop, against the live preview, `NOINDEX=true` so SEO
+  is depressed by design — see below):
+
+  | category       | mobile | desktop |
+  |----------------|--------|---------|
+  | Performance    | 98     | 100     |
+  | Accessibility  | 100    | 100     |
+  | Best Practices | 100    | 100     |
+  | SEO            | 69     | 69      |
+
+  SEO's only failing audit is `is-crawlable` ("Page is blocked from indexing") — the
+  intended effect of `NOINDEX=true` on a pre-launch preview, not a defect. With that
+  flag removed at cutover, SEO should read at or near 100, matching §6's target.
 
 ## 9. Maintenance model
 
