@@ -55,7 +55,7 @@ const ogImageUrl = ogImage ? new URL(ogImage, Astro.site) : undefined;
 </head>
 <body>
   <Nav pageId={pageId} lang={lang} />
-  <slot />
+  <main><slot /></main>
   <footer>© Antonio Simón · antoniosimon.es</footer>
 </body>
 </html>
