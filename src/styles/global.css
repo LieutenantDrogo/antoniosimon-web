@@ -418,7 +418,7 @@ body::after{
   .prog-code{grid-column:1;grid-row:1 / span 6;margin-bottom:0;padding-top:.5rem}
   .prog>:not(.prog-code){grid-column:2}
 }
-.prog h3{
+.prog-title{
   font-family:'Instrument Serif',serif;font-weight:400;
   font-size:var(--fs-prog);line-height:1.1;
 }

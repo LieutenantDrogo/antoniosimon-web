@@ -26,7 +26,7 @@ const recordings = (await getCollection('recordings')).sort((a, b) => a.data.ord
               <VideoPoster youtubeId={v.data.youtubeId} label={label} lang={lang} />
             </div>
             <p class="meta">{v.data.instrument[lang]}</p>
-            <h3 class="vid-title">{v.data.composer}</h3>
+            <h2 class="vid-title">{v.data.composer}</h2>
             <p class="vid-work">{v.data.work[lang]}</p>
             {v.data.caption && <p class="small dim">{v.data.caption[lang]}</p>}
             <p class="prog-link">
@@ -52,6 +52,7 @@ const recordings = (await getCollection('recordings')).sort((a, b) => a.data.ord
             url={r.data.url}
             urlLabel={r.data.urlLabel?.[lang]}
             descClass="desc small"
+            level={3}
           />
         ))}
       </div>

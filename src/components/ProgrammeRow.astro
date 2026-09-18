@@ -12,12 +12,16 @@ interface Props {
   url?: string;
   urlLabel?: string;
   descClass?: string;
+  /** 2 for a top-level list (Programmes, Research); 3 inside a section that
+      already has its own h2 (the recordings list on Listen). */
+  level?: 2 | 3;
 }
-const { code, title, subtitle, desc, meta, url, urlLabel, descClass = 'desc' } = Astro.props;
+const { code, title, subtitle, desc, meta, url, urlLabel, descClass = 'desc', level = 2 } = Astro.props;
+const Heading = `h${level}` as 'h2' | 'h3';
 ---
 <article class="prog">
   {code && <p class="prog-code">{code}</p>}
-  <h3>{title}</h3>
+  <Heading class="prog-title">{title}</Heading>
   {subtitle && <p class="prog-sub">{subtitle}</p>}
   <p class={descClass}>{desc}</p>
   {meta && <p class="meta">{meta}</p>}
