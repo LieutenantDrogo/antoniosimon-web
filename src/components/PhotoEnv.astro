@@ -1,23 +1,32 @@
 ---
 import imagesManifest from '../data/images.json';
+import type { Lang } from '../data/routes';
 
-type Slot = keyof typeof imagesManifest;
+type PhotoSlot = keyof typeof imagesManifest;
 
 interface Props {
-  slot: Slot;
+  photo: PhotoSlot;
+  lang: Lang;
+  /** true on the home hero only — the LCP image, so it is not lazy and gets priority. */
+  priority?: boolean;
 }
-const { slot } = Astro.props;
-const img = imagesManifest[slot];
+const { photo, lang, priority = false } = Astro.props;
+const img = imagesManifest[photo];
 ---
 <div class="env">
   <div class="amb" style={`background-image:url('${img.ambient}')`}></div>
   <div class="scrim"></div>
   <picture>
-    <source media="(max-width:820px)" srcset={img.mobile} />
+    <source media="(max-width:820px)" srcset={img.mobile} width={img.mobileWidth} height={img.mobileHeight} />
     <img
       class="sharp"
       src={img.desktop}
-      alt={img.alt}
+      width={img.width}
+      height={img.height}
+      alt={img.alt[lang]}
+      decoding="async"
+      loading={priority ? 'eager' : 'lazy'}
+      fetchpriority={priority ? 'high' : undefined}
       style={'filter' in img ? `filter:${img.filter}` : undefined}
     />
   </picture>

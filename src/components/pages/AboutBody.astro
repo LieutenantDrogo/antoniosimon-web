@@ -1,0 +1,50 @@
+---
+import { getEntry, render } from 'astro:content';
+import PhotoEnv from '../PhotoEnv.astro';
+import PageHead from '../PageHead.astro';
+import RecordList from '../RecordList.astro';
+import type { Lang } from '../../data/routes';
+import { pick } from '../../data/i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+
+const page = (await getEntry('pages', 'about'))!.data;
+const site = (await getEntry('site', 'site'))!.data;
+const entry = await getEntry('bio', `bio.${lang}`);
+if (!entry) throw new Error(`Missing bio entry: ${lang}`);
+const { Content } = await render(entry);
+
+const rows = entry.data.record.map((r) => ({ dt: r.dt[lang], dd: pick(r.dd, lang) }));
+const pressNote = {
+  en: 'Photographs and further press material on request.',
+  es: 'Fotografías y otros materiales de prensa, a petición.',
+};
+---
+<section class="page has-photo">
+  <PhotoEnv photo="about" lang={lang} />
+  <div class="inner">
+    <div class="content">
+      <PageHead eyebrow={page.eyebrow[lang]} display={page.display[lang]} lede={page.lede?.[lang]} />
+
+      <blockquote class="quote">
+        <p>{site.quote.text[lang]}</p>
+        <p class="who">{site.quote.who}</p>
+      </blockquote>
+
+      <div class="body-copy"><Content /></div>
+    </div>
+  </div>
+</section>
+
+<section class="listing">
+  <div class="inner">
+    <RecordList label={page.recordLabel![lang]} rows={rows} />
+
+    <section class="shortbio">
+      <h2 class="eyebrow">{page.shortBioLabel?.[lang]}</h2>
+      <p>{entry.data.short}</p>
+      <p class="small dim">{pressNote[lang]} <a href={`mailto:${site.email}`}>{site.email}</a></p>
+    </section>
+  </div>
+</section>

@@ -1,0 +1,17 @@
+---
+/** Eyebrow + h1 + optional kicker/lede — the opening of every page. */
+import DisplayHeading from './DisplayHeading.astro';
+
+interface Props {
+  eyebrow: string;
+  display: string;
+  italic?: boolean;
+  kicker?: string;
+  lede?: string;
+}
+const { eyebrow, display, italic, kicker, lede } = Astro.props;
+---
+<p class="eyebrow">{eyebrow}</p>
+<DisplayHeading text={display} italic={italic} />
+{kicker && <p class="kicker">{kicker}</p>}
+{lede && <p class="lede">{lede}</p>}

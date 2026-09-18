@@ -51,10 +51,15 @@ the past as avant-garde.
    | manifesto  | `#150a10` | `#F4E7DC` | `#F0784C` | `#a97f6e` |
    | programmes | `#0e0f10` | `#E8E6DE` | `#C9C4AE` | `#83857e` |
    | agenda     | `#0d0d0d` | `#EAEAEA` | `#DADADA` | `#848484` |
-   | media      | `#0d0f0b` | `#EDEBDC` | `#D9C95A` | `#8c8a70` |
+   | listen     | `#0d0f0b` | `#EDEBDC` | `#D9C95A` | `#95937a` |
    | research   | `#0f0e10` | `#E8E6DE` | `#B9B3C9` | `#807c8a` |
    | about      | `#12130b` | `#EDEBDC` | `#C7BC55` | `#93916c` |
    | contact    | `#12120c` | `#EDEBDC` | `#D9C95A` | `#93916c` |
+
+   *(session 3: `--dim` was raised on six pages — the old values sat at 4.1–4.6:1
+   against their ground, under the 4.5:1 floor for the small type that uses them.
+   Measured after the change: `--dim` 6.53:1, `--key` meta 11.14:1, ink 15.68:1.
+   `media` was renamed `listen`.)*
 
    Grounds were sampled from the photographs' dark quintile — keep them exact. Ink is not flat
    site-wide: manifesto and the two document pages (programmes, research) carry a warmer/cooler
@@ -71,12 +76,26 @@ the past as avant-garde.
 7. **Film grain overlay** site-wide: SVG `feTurbulence` data-URI, `opacity .06`,
    `mix-blend-mode: overlay`, fixed. It doubles as alpha-fade de-banding.
 
-8. **Nav**: fixed; fluid `clamp()` type/gaps; wraps below 980px (brand + language toggle
-   row, sections flowing beneath); no hamburger; active section underlined in key color.
-   v10 is not ground truth for the nav backdrop — see "Divergences from v10" below.
+8. **Header** *(revised session 3 — supersedes the "wraps below 980px, no hamburger"
+   rule)*: fixed; brand left, sections centre, language toggle right. One row of
+   links at **≥1080px**; below that the links collapse into a **`<details>` dropdown**
+   labelled Menu/Menú, whose panel lists all eight sections in Instrument Serif with
+   their index 00–07. Active section underlined (row) or in key colour (panel).
+   Backdrop: none at rest at any width — legibility comes from a two-stop
+   `text-shadow` — plus a translucent blurred strip once the page has scrolled past
+   18px (`.is-scrolled`). v10 is not ground truth for the backdrop; the v12–v15
+   drafts are the source of the dropdown and of the scroll behaviour.
 
 9. **Videos**: click-to-play facade posters (thumbnail + play button → injects
-   `youtube-nocookie` iframe with autoplay). Never eager iframes.
+   `youtube-nocookie` iframe with autoplay). Never eager iframes. Thumbnails are
+   **self-hosted** (`public/img/video-*.webp`), not hot-linked from `i.ytimg.com`:
+   nothing reaches a Google domain until the visitor asks for the video.
+
+10. **One body per page, two routes.** Each page's markup lives once in
+   `src/components/pages/<Page>Body.astro` and takes a `lang` prop; the sixteen
+   files in `src/pages/` are ten-line wrappers. Before session 3 the ES routes were
+   full copies of the EN ones, which is how four English headings ended up rendering
+   on Spanish pages.
 
 ## Divergences from v10
 
@@ -153,7 +172,7 @@ English is primary (root); Spanish mirrors under `/es/` with localized slugs:
 /manifesto   /es/manifiesto
 /programmes  /es/programas
 /agenda      /es/agenda
-/media       /es/medios
+/listen      /es/escuchar
 /research    /es/investigacion
 /about       /es/biografia
 /contact     /es/contacto
@@ -370,3 +389,82 @@ aspect rendering means the fade can never be cropped off.
 - **Design/code**: via Claude Code sessions against this repo. This file is the
   guardrail — parity with the locked decisions in §2 unless Antonio explicitly
   reopens one.
+
+---
+
+## 10. Session 3 — final design pass and copy (September 2026)
+
+The site was taken from "port of v10, placeholder copy" to "ready to publish".
+Everything in §2 still holds except where §2.8 and §2.9–10 were rewritten above.
+
+### 10.1 What changed
+
+**Header.** One solution at every width, replacing v10's wrapping row: a link row
+at ≥1080px, a `<details>` dropdown below it (so iPad portrait *and* landscape get
+the dropdown). The panel lists all eight sections in Instrument Serif with their
+00–07 index, the idea the v12–v15 drafts had already arrived at. The header has no
+background at rest and earns a translucent blurred strip past 18px of scroll,
+which is v15's behaviour extended to desktop, where the long document pages need
+it just as much. This retires the `nav .navlist{font-size:.46rem}` rule at ≤520px,
+a measured fit for exactly seven labels that would have broken on the eighth.
+
+**Type scale.** Every loose size moved into tokens on `:root`. The old scale was
+built for a prototype and read small: the lede went from `clamp(.95rem,…,1.08rem)`
+to `clamp(1.05rem,…,1.22rem)`, nav from `≈.6–.72rem` to `≈.78–.86rem`, and the
+uppercase meta tier — previously ten rules at five sizes and five letter-spacings
+— collapsed into `--fs-meta` / `--ls-meta`.
+
+**Photo pages became two sections.** A room page is now a full-viewport portrait
+hero plus, where the page has list content, a `.listing` section on clean ground
+below it. Agenda, About's Record table and Contact's three-column grid all moved
+there. The agenda was the forcing case: its B&W portrait is the one bright enough
+on its left half to swallow body copy, and the rows ran straight across it.
+
+**Copy.** All of it rewritten from scratch in both languages, from the CV, the
+lecture scripts (Vienna, Bern, Ghent, Perugia, Stanford), the ethos profile and
+the identity document. The manifesto names its antagonist — the clean synchronised
+reading as a twentieth-century style rather than the absence of one — which the
+placeholder draft did not. `docs/TEXTOS.md`, generated by
+`scripts/export-texts.py`, is the review copy.
+
+**Agenda is real.** Six confirmed engagements from Career Atlas, with ISO dates;
+the page splits upcoming from recent at build time and the home page derives its
+"next appearance" block from the same data. Nothing else from Atlas is published.
+
+**Accessibility and metadata.** Skip link; one `:focus-visible` rule for the whole
+site (only nav and `.cta` had one); `hreflang` on the language toggle anchors;
+bilingual `alt`; intrinsic `width`/`height` on every portrait; per-page
+`theme-color`; `og:image` on all sixteen routes instead of one; `og:locale`;
+JSON-LD `Person`; a bilingual `404.astro`; security headers in `public/_headers`.
+
+### 10.2 What was considered and not done
+
+- **Regenerating the images at higher resolution.** Measured first: the sources
+  are 960×1200 (768×960 for About) at 28–64 KB. A 1600px cap and a 2× mobile
+  variant would have produced nothing the sources contain. `build-images.py` was
+  only changed to emit bilingual `alt` and intrinsic dimensions.
+- **Per-slot OG crops.** One hero crop for every route is correct here: the share
+  card should be the person, not the page.
+
+### 10.3 Verified
+
+128 page/viewport combinations (8 routes × 2 languages × 8 widths from 320 to
+1920), with zero horizontal overflow, zero header overlaps, zero console errors,
+zero 4xx, one `<h1>` per page, and the intended nav mode at every width. Menu
+opens by keyboard, closes on Escape with focus returned, closes on outside click,
+and navigates with JavaScript disabled. The language toggle keeps the section. The
+video facade creates no iframe before the click and still binds after a
+client-side navigation. Text at 200% zoom does not overflow at 640px. Contrast
+against each page's own ground: `--dim` 6.53:1, meta/eyebrow 11.14:1, body 15.68:1.
+
+Not verified here: a physical device pass, and playback of the two videos from the
+production origin (YouTube can restrict embedding per origin). Both are in
+`docs/LAUNCH.md`, steps 1 and 7.
+
+### 10.4 Launch
+
+`docs/LAUNCH.md` holds the full plan: Cloudflare Pages for the web, a free
+Cloudflare DNS zone (required for the apex domain), the mailbox kept at
+dinahosting on their mail-only plan before the 3 February 2027 renewal, and the
+`.es` staying at Arsys for now — Cloudflare Registrar does not carry `.es`.
+`docs/PENDIENTES.md` lists what would improve the site but does not block it.

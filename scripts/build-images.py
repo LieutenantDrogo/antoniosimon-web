@@ -26,24 +26,24 @@ OG_SIZE = (1200, 630)
 PORTRAITS = {
     "hero": {
         "file": "hero-frontal-green.JPG",
-        "alt": "Antonio Simón, portrait in green light",
+        "alt": {"en": "Antonio Simón, portrait in green light", "es": "Antonio Simón, retrato bajo luz verde"},
     },
     "manifesto": {
         "file": "manifesto-red-doubleexposure.JPG",
-        "alt": "Antonio Simón, portrait in red light",
+        "alt": {"en": "Antonio Simón, portrait in red light, double exposure", "es": "Antonio Simón, retrato bajo luz roja, doble exposición"},
     },
     "agenda": {
         "file": "agenda-bw-lightbars.JPG",
-        "alt": "Antonio Simón, black and white portrait with bars of light",
+        "alt": {"en": "Antonio Simón, black and white portrait with bars of light", "es": "Antonio Simón, retrato en blanco y negro con franjas de luz"},
         "filter": "grayscale(1) contrast(1.05)",
     },
     "about": {
         "file": "about-profile-green.JPG",
-        "alt": "Antonio Simón, profile in green light",
+        "alt": {"en": "Antonio Simón, profile in green light", "es": "Antonio Simón, de perfil bajo luz verde"},
     },
     "contact": {
         "file": "contact-frontal-green.JPG",
-        "alt": "Antonio Simón, portrait in green light, facing the camera",
+        "alt": {"en": "Antonio Simón, portrait in green light, facing the camera", "es": "Antonio Simón, retrato bajo luz verde, mirando a cámara"},
     },
 }
 
@@ -136,6 +136,10 @@ def build_portrait(slot: str, meta: dict) -> dict:
         "mobile": f"/img/{mobile_name}",
         "ambient": f"/img/{amb_name}",
         "alt": meta["alt"],
+        "width": desktop_img.width,
+        "height": desktop_img.height,
+        "mobileWidth": mobile_img.width,
+        "mobileHeight": mobile_img.height,
     }
     if "filter" in meta:
         entry["filter"] = meta["filter"]

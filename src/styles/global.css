@@ -1,4 +1,36 @@
-:root{--ease:cubic-bezier(.22,.9,.3,1)}
+/* ============================================================================
+   antoniosimon.es — one stylesheet, no framework.
+   Order: tokens → fonts → grounds → paint → grain → header → photo env →
+   layout → type → components → footer.
+   The locked decisions live in BUILD.md §2; the comments below mark the rules
+   that have already been argued over once and must not be silently reverted.
+   ========================================================================= */
+
+:root{
+  --ease:cubic-bezier(.22,.9,.3,1);
+
+  /* Type scale. Everything that used to be a loose magic number is here. */
+  --fs-display:clamp(2.6rem,6vw,5.4rem);
+  --fs-kicker:clamp(1.5rem,2.6vw,2.4rem);
+  --fs-lede:clamp(1.05rem,1.3vw,1.22rem);
+  --fs-manifesto:clamp(1.18rem,1.7vw,1.45rem);
+  --fs-body:1.05rem;
+  --fs-prog:clamp(1.4rem,2.3vw,1.9rem);
+  --fs-prog-sub:clamp(1.05rem,1.4vw,1.25rem);
+  --fs-small:.92rem;
+  --fs-meta:.8rem;
+  --fs-nav:clamp(.78rem,.7rem + .3vw,.86rem);
+  --ls-meta:.14em;
+
+  /* Reading measures. */
+  --w-lede:36em;
+  --w-body:42em;
+  --w-manifesto:32em;
+
+  --header-h:5.4rem;
+  --gutter:clamp(1.25rem,3vw,3rem);
+}
+
 *{margin:0;padding:0;box-sizing:border-box}
 
 /* ------- self-hosted fonts (§2.2, SIL OFL, no Google CDN) ------- */
@@ -25,21 +57,21 @@
 
 /* grounds derived from each photograph's own shadows (§2.4) */
 html[data-page="home"]      {--bg:#11110a;--ink:#EDEBDC;--key:#D9C95A;--dim:#9a976f}
-html[data-page="manifesto"] {--bg:#150a10;--ink:#F4E7DC;--key:#F0784C;--dim:#a97f6e}
-html[data-page="programmes"]{--bg:#0e0f10;--ink:#E8E6DE;--key:#C9C4AE;--dim:#83857e}
-html[data-page="agenda"]    {--bg:#0d0d0d;--ink:#EAEAEA;--key:#DADADA;--dim:#848484}
-html[data-page="media"]     {--bg:#0d0f0b;--ink:#EDEBDC;--key:#D9C95A;--dim:#8c8a70}
-html[data-page="research"]  {--bg:#0f0e10;--ink:#E8E6DE;--key:#B9B3C9;--dim:#807c8a}
-html[data-page="about"]     {--bg:#12130b;--ink:#EDEBDC;--key:#C7BC55;--dim:#93916c}
-html[data-page="contact"]   {--bg:#12120c;--ink:#EDEBDC;--key:#D9C95A;--dim:#93916c}
+html[data-page="manifesto"] {--bg:#150a10;--ink:#F4E7DC;--key:#F0784C;--dim:#b08c7c}
+html[data-page="programmes"]{--bg:#0e0f10;--ink:#E8E6DE;--key:#C9C4AE;--dim:#8d8f88}
+html[data-page="agenda"]    {--bg:#0d0d0d;--ink:#EAEAEA;--key:#DADADA;--dim:#8e8e8e}
+html[data-page="listen"]    {--bg:#0d0f0b;--ink:#EDEBDC;--key:#D9C95A;--dim:#95937a}
+html[data-page="research"]  {--bg:#0f0e10;--ink:#E8E6DE;--key:#B9B3C9;--dim:#8a8694}
+html[data-page="about"]     {--bg:#12130b;--ink:#EDEBDC;--key:#C7BC55;--dim:#9c9a75}
+html[data-page="contact"]   {--bg:#12120c;--ink:#EDEBDC;--key:#D9C95A;--dim:#9c9a75}
 
 /*
-  Sanctioned deviation from v10: the ground/ink paint moves from body to html.
-  Under Astro's ClientRouter, <body> is fully replaced on navigation, but
-  <html> persists and has its data-page attribute rewritten per route — so
-  html is the only element that can actually *transition* background-color
-  across a navigation. If body carried it, a freshly-inserted body would
-  arrive already painted in the new color and the .7s melt would never fire.
+  Sanctioned deviation from v10: the ground/ink paint sits on html, not body.
+  Under Astro's ClientRouter, <body> is fully replaced on navigation, but <html>
+  persists and has its data-page attribute rewritten per route — so html is the
+  only element that can actually *transition* background-color across a
+  navigation. If body carried it, a freshly-inserted body would arrive already
+  painted in the new colour and the .7s melt would never fire.
 */
 html{
   background:var(--bg);color:var(--ink);
@@ -50,114 +82,169 @@ html{
 }
 
 body{
-  font-family:'Archivo',system-ui,sans-serif;
   background:transparent;color:inherit;min-height:100vh;
-  -webkit-font-smoothing:antialiased;
+  font-family:'Archivo',system-ui,sans-serif;font-size:1rem;line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
 
-/*
-  The .7s color/border-color melt (content, not the ground) is delivered by
-  Astro's view-transition root crossfade, tuned to the same tempo — the whole
-  ecosystem mutates together even though body is a fresh element each nav.
-  ClientRouter auto-disables this under prefers-reduced-motion (hard swap).
-*/
+/* color/border cross-fade at the same tempo as html's background transition */
 ::view-transition-old(root),
 ::view-transition-new(root){
   animation-duration:.7s;
   animation-timing-function:var(--ease);
 }
 
-::selection{background:var(--key);color:var(--bg)}
 a{color:inherit}
 img{display:block;max-width:100%}
+p+p{margin-top:1em}
+.dim{color:var(--dim)}
+::selection{background:var(--key);color:var(--bg)}
 
-/* grain */
+/* One focus ring for the whole site — previously only nav and .cta had one. */
+:focus-visible{outline:2px solid var(--key);outline-offset:3px;border-radius:2px}
+
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:200;
+  background:var(--bg);color:var(--ink);padding:.8rem 1.2rem;
+  font-size:var(--fs-meta);letter-spacing:var(--ls-meta);text-transform:uppercase;
+  text-decoration:none;border:1px solid var(--key);
+}
+.skip:focus{left:var(--gutter);top:.6rem}
+
+/* ------- film grain (§2.7); also de-bands the baked alpha fades ------- */
 body::after{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:50;
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:60;
   opacity:.06;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ------- nav ------- */
+/* ============================ header ====================================== */
 /*
-  v10 is NOT ground truth for this rule. v10 hardened the nav backdrop to
-  a 94%-opaque stop at 55% that reads as a hard bar over the photo; this is
-  a deliberate divergence back to a softer scrim at desktop widths. A future
-  session must not "restore parity" with v10 here and undo it.
+  v10 is NOT ground truth here. v10 hardened the nav backdrop to a 94%-opaque
+  stop that reads as a bar of chrome over the photograph. At rest the header has
+  no band at all: legibility comes from text-shadow, the same mechanism .lede
+  uses, plus the portrait's own baked top-edge dissolve (§5). A future session
+  must not "restore parity" with v10 here.
+
+  What v15 added and is kept: past 18px of scroll the header earns a translucent
+  blurred strip, because by then it is sitting over body copy rather than over
+  haze. That is the only state with a background.
 */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:40;
-  display:flex;align-items:center;
-  gap:clamp(.75rem,1.5vw,1.5rem);padding:1.1rem clamp(1.2rem,2.5vw,2rem);
-  font-size:clamp(.6rem,.5rem + .28vw,.72rem);letter-spacing:.13em;text-transform:uppercase;font-weight:500;
-  background:linear-gradient(to bottom,
-    color-mix(in srgb, var(--bg) 86%, transparent) 0%,
-    color-mix(in srgb, var(--bg) 58%, transparent) 42%,
-    color-mix(in srgb, var(--bg) 24%, transparent) 72%,
-    transparent 100%);
+.site-header{
+  position:fixed;top:0;left:0;right:0;z-index:80;
+  display:flex;align-items:center;gap:1.5rem;
+  min-height:var(--header-h);padding:0 var(--gutter);
+  border-bottom:1px solid transparent;
+  transition:background-color .28s var(--ease),backdrop-filter .28s var(--ease),
+             -webkit-backdrop-filter .28s var(--ease),border-color .28s var(--ease);
 }
-nav .brand{margin-right:auto;font-weight:600;letter-spacing:.18em;white-space:nowrap;text-decoration:none}
-/* §6: a real <ul> of <a href> — display:contents keeps each link a direct
-   flex child of nav so the original gap/wrap layout is unaffected */
-nav .navlist,nav .navlist li{display:contents}
-nav a{
-  color:var(--dim);font:inherit;text-decoration:none;
-  letter-spacing:inherit;text-transform:inherit;padding:.2rem 0;
-  border-bottom:1px solid transparent;transition:color .25s,border-color .25s;white-space:nowrap;
-  /* legibility over bright photo areas without an opaque band — same
-     mechanism as .lede's text-shadow, tuned tighter for small nav type.
-     Covers brand + nav links + lang toggle (all are nav a). */
-  text-shadow:0 1px 12px color-mix(in srgb, var(--bg) 80%, transparent);
+.site-header.is-scrolled{
+  background:color-mix(in srgb, var(--bg) 78%, transparent);
+  -webkit-backdrop-filter:blur(14px) saturate(1.12);
+  backdrop-filter:blur(14px) saturate(1.12);
+  border-bottom-color:color-mix(in srgb, var(--ink) 10%, transparent);
 }
-nav a:hover{color:var(--ink)}
-nav a:focus-visible{outline:2px solid var(--key);outline-offset:3px}
-nav a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--key)}
-nav .lang{display:flex;gap:.6rem;margin-left:1rem}
-nav .lang a.on{color:var(--key)}
-@media(max-width:980px){
-  /* no background override here: the wrapped nav inherits the same soft
-     desktop scrim above rather than a harder opaque band (Antonio wants
-     the hard bar gone) — text-shadow on nav a carries the legibility */
-  nav{flex-wrap:wrap;row-gap:.55rem;padding:.9rem 1.2rem;letter-spacing:.1em}
-  nav .lang{order:1;margin-left:auto}
-  /*
-    Force a clean break: row 1 = brand + lang, row 2 = section links.
-    Without this, .navlist's <a> are individual flex children of nav
-    (via display:contents below) and wrap wherever the line runs out of
-    room — leaving the lang toggle stranded mid-row with e.g. MANIFESTO
-    still fitting behind it. Making .navlist a real flex item with
-    flex-basis:100% forces it onto its own line; its own <li> stay
-    display:contents so the <a> flex directly inside .navlist's own
-    flex context, at the same gap nav uses.
-  */
-  nav .navlist{
-    display:flex;flex-wrap:wrap;gap:clamp(.75rem,1.5vw,1.5rem);
-    flex-basis:100%;order:2;
+@media(prefers-reduced-transparency:reduce){
+  .site-header.is-scrolled{
+    background:var(--bg);
+    -webkit-backdrop-filter:none;backdrop-filter:none;
   }
-  nav .navlist li{display:contents}
-}
-@media(max-width:520px){
-  /*
-    Below ~520px the 7 links no longer fit on .navlist's single forced
-    line at the default nav type size (measured: overflows to a 3rd nav
-    row, which is tall enough to sit on fully-opaque photo — the mobile
-    alpha ramp only clears by y=14% of the photo's own height, calibrated
-    for a 2-row nav). Tighter type keeps it to one line down to ~375px
-    (measured); reduced nav side padding buys a little more width too.
-  */
-  nav{padding-left:.9rem;padding-right:.9rem}
-  nav .navlist{font-size:.46rem;letter-spacing:.03em;gap:.32rem}
 }
 
-/* ------- pages & photo environments ------- */
-/*
-  v10's JS router toggled .page.active across 8 sections co-resident in one
-  DOM; here each route renders exactly one .page, so it's simply always on —
-  no display:none/.active gate, no bespoke pagein keyframe (the entrance fade
-  that used to trigger on .active is now the view-transition root crossfade
-  above, tuned to the same .7s tempo).
-*/
-.page{min-height:100vh;position:relative;overflow:hidden}
+.site-header a{
+  text-decoration:none;
+  /*
+    Legibility over bright photo areas without an opaque band. Two stops: a
+    tight one that holds the letterforms and a wide one that darkens the halo
+    behind them. Measured against the manifesto and hero portraits, which are
+    the brightest grounds the nav ever crosses.
+  */
+  text-shadow:0 1px 3px color-mix(in srgb, var(--bg) 92%, transparent),
+              0 2px 16px color-mix(in srgb, var(--bg) 80%, transparent);
+}
+.brand{
+  margin-right:auto;white-space:nowrap;
+  font-size:1rem;font-weight:600;letter-spacing:.06em;
+}
+.header-actions{display:flex;align-items:center;gap:clamp(.8rem,2vw,1.6rem)}
+
+.desknav ul{display:flex;align-items:center;gap:clamp(.9rem,1.7vw,1.7rem);list-style:none}
+.desknav a{
+  display:block;padding:.4rem 0;
+  font-size:var(--fs-nav);letter-spacing:.12em;text-transform:uppercase;font-weight:500;
+  /* brighter than --dim: these sit over photographs, not over flat ground */
+  color:color-mix(in srgb, var(--ink) 74%, transparent);
+  border-bottom:1px solid transparent;
+  transition:color .25s,border-color .25s;white-space:nowrap;
+}
+.desknav a:hover{color:var(--ink)}
+.desknav a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--key)}
+
+.lang{display:flex;align-items:center;gap:.15rem;font-size:var(--fs-nav);letter-spacing:.1em}
+.lang a{
+  display:flex;align-items:center;justify-content:center;
+  min-width:2.4rem;min-height:2.6rem;
+  color:color-mix(in srgb, var(--ink) 66%, transparent);
+}
+.lang a.on{color:var(--key)}
+.lang a:hover{color:var(--ink)}
+.lang-sep{color:color-mix(in srgb, var(--dim) 55%, transparent)}
+
+/* ------- dropdown menu (<details>: works with JS off) ------- */
+.menu{display:none}
+.menu summary{
+  list-style:none;cursor:pointer;
+  display:flex;align-items:center;gap:.65rem;min-height:2.75rem;
+  font-size:var(--fs-nav);letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+  text-shadow:0 1px 12px color-mix(in srgb, var(--bg) 80%, transparent);
+}
+.menu summary::-webkit-details-marker{display:none}
+.menu-glyph{
+  width:20px;height:9px;
+  border-top:1px solid currentColor;border-bottom:1px solid currentColor;
+  transition:transform .22s var(--ease);
+}
+.menu[open] .menu-glyph{transform:rotate(-45deg)}
+
+.menupanel{
+  position:fixed;left:0;right:0;top:var(--header-h);
+  max-height:calc(100dvh - var(--header-h));overflow-y:auto;overscroll-behavior:contain;
+  padding:.5rem var(--gutter) 2rem;
+  background:color-mix(in srgb, var(--bg) 96%, transparent);
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  border-bottom:1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+}
+.menupanel ul{list-style:none}
+.menupanel a{
+  display:grid;grid-template-columns:2.6rem 1fr;align-items:baseline;
+  padding:.72rem 0;
+  border-bottom:1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(1.6rem,6vw,2.2rem);line-height:1.1;color:var(--ink);
+  text-shadow:none;
+}
+.menupanel li:last-child a{border-bottom:0}
+.menupanel a[aria-current="page"]{color:var(--key)}
+.menu-no{
+  font-family:'Archivo',system-ui,sans-serif;
+  font-size:.62rem;letter-spacing:.14em;color:var(--key);
+}
+/* A closed <details> can still leave a layout box in some engines. */
+.menu:not([open]) .menupanel{display:none}
+
+@media(max-width:1079px){
+  .desknav{display:none}
+  .menu{display:block}
+}
+@media(max-width:420px){
+  :root{--header-h:4.8rem}
+  .brand{font-size:.9rem;letter-spacing:.02em}
+  .lang a{min-width:2.1rem}
+  .menu summary{gap:.45rem}
+}
+
+/* ========================= photo environments ============================= */
+.page{min-height:100svh;position:relative;overflow:hidden}
 
 .env{
   position:absolute;top:0;left:0;right:0;height:100vh;height:100svh;z-index:0;pointer-events:none;
@@ -166,7 +253,7 @@ nav .lang a.on{color:var(--key)}
 }
 .env .amb{
   position:absolute;inset:-8%;
-  background-size:cover;background-position:var(--ambpos,80% 30%);
+  background-size:cover;background-position:80% 30%;
   opacity:.62;filter:saturate(1.08);
 }
 .env .scrim{
@@ -174,15 +261,16 @@ nav .lang a.on{color:var(--key)}
   background:linear-gradient(95deg, var(--bg) 5%, color-mix(in srgb, var(--bg) 68%, transparent) 26%, color-mix(in srgb, var(--bg) 34%, transparent) 44%, color-mix(in srgb, var(--bg) 12%, transparent) 60%, transparent 78%);
 }
 .env .sharp{position:absolute;top:0;right:0;height:100%;width:auto}
+
 @media(max-width:820px){
   /*
-    Nav legibility over the mobile photo comes from text-shadow on nav a
-    plus the image pipeline's own top-edge dissolve (§5) — the portrait
-    fades into the ground at y=0..14%, so the nav sits over haze, not a
-    hard photo edge. An earlier attempt offset .env below the nav instead;
-    that put the nav on solid ground, which is exactly the opaque-band
-    look this was meant to remove, and left a hard horizontal edge at the
-    photo's new top. Reverted — do not reintroduce a top offset here.
+    Nav legibility over the mobile photo comes from text-shadow plus the image
+    pipeline's own top-edge dissolve (§5): the portrait fades into the ground
+    from y=0 to y=14%, so the header sits over haze, not a hard photo edge.
+    An earlier attempt offset .env below the nav instead; that put the nav on
+    solid ground — exactly the opaque-band look this was meant to remove — and
+    left a hard horizontal seam at the photo's new top. Reverted; do not
+    reintroduce a top offset here.
   */
   .env .sharp{top:0;right:auto;left:50%;transform:translateX(-50%);width:100%;height:auto}
   .env .scrim{
@@ -190,26 +278,37 @@ nav .lang a.on{color:var(--key)}
   }
 }
 
-.inner{position:relative;z-index:2;padding:7.5rem 2rem 4.5rem;max-width:1180px;margin:0 auto}
-.page.has-photo .inner{max-width:none;padding-left:max(2rem, calc((100vw - 1180px)/2 + 2rem))}
-.page.has-photo .content{max-width:34rem}
-@media(max-width:980px){
-  .inner{padding-top:9.5rem}
+/* ============================== layout =================================== */
+.inner{
+  position:relative;z-index:2;
+  padding:calc(var(--header-h) + 3.5rem) var(--gutter) 5rem;
+  max-width:1180px;margin:0 auto;
 }
+.page.has-photo .inner{
+  max-width:none;
+  padding-left:max(var(--gutter), calc((100vw - 1180px)/2 + var(--gutter)));
+  padding-right:max(var(--gutter), calc((100vw - 1180px)/2 + var(--gutter)));
+}
+.page.has-photo .content{max-width:36rem}
+
 @media(max-width:820px){
-  .inner{padding:9.5rem 1.4rem 4rem}
-  .page.has-photo .inner{padding-top:46vh;padding-left:1.4rem}
+  .inner{padding-top:calc(var(--header-h) + 2.5rem)}
+  .page.has-photo .inner{padding-top:46vh}
   .page.has-photo .content{max-width:none}
 }
 
-.eyebrow{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--key);font-weight:600;margin-bottom:1.4rem}
+/* ============================ typography ================================= */
+.eyebrow{
+  font-size:var(--fs-meta);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--key);font-weight:600;margin-bottom:1.4rem;
+}
 
-/* display type + dislocation echo */
 .display{
   font-family:'Instrument Serif',serif;font-weight:400;
-  font-size:clamp(2.2rem,5vw,4.5rem);line-height:1.0;letter-spacing:-.01em;
+  font-size:var(--fs-display);line-height:1.02;letter-spacing:-.015em;
   position:relative;display:inline-block;
 }
+/* the dislocation echo (§2.3) — one per page, nowhere else */
 .display::before{
   content:attr(data-text);position:absolute;left:0;top:0;width:100%;
   color:var(--key);opacity:.34;z-index:-1;transform:translate(.09em,-.05em);
@@ -217,100 +316,265 @@ nav .lang a.on{color:var(--key)}
 }
 @keyframes drift{from{transform:translate(0,0);opacity:0}to{transform:translate(.09em,-.05em);opacity:.34}}
 @media(prefers-reduced-motion:reduce){.display::before{animation:none}}
-.display .it,.it{font-style:italic}
+.it{font-style:italic}
 
-.lede{font-size:clamp(.95rem,1.15vw,1.08rem);line-height:1.7;max-width:34em;margin-top:1.7rem;
-  text-shadow:0 1px 18px color-mix(in srgb, var(--bg) 70%, transparent)}
-p+p{margin-top:1em}
-.dim{color:var(--dim)}
-.small{font-size:.82rem;line-height:1.6}
-
-.quote{
-  margin-top:2.2rem;font-family:'Instrument Serif',serif;font-style:italic;
-  font-size:clamp(1rem,1.4vw,1.2rem);color:var(--key);
+.kicker{
+  font-family:'Instrument Serif',serif;
+  font-size:var(--fs-kicker);line-height:1.2;margin-top:1.4rem;max-width:22em;
+  text-shadow:0 1px 18px color-mix(in srgb, var(--bg) 70%, transparent);
 }
-.quote .who{
-  display:block;font-family:'Archivo';font-style:normal;font-size:.68rem;
-  letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-top:.5rem;
+.lede{
+  font-size:var(--fs-lede);line-height:1.65;max-width:var(--w-lede);margin-top:1.6rem;
+  text-shadow:0 1px 18px color-mix(in srgb, var(--bg) 70%, transparent);
 }
-
-.press{margin-top:2rem;display:flex;flex-wrap:wrap;gap:.6rem 1.6rem;
-  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
-.press span{white-space:nowrap}
-
-.cta{margin-top:2.4rem;display:flex;gap:1rem;flex-wrap:wrap}
-.cta a{
-  font:inherit;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
-  padding:.85rem 1.4rem;border:1px solid var(--key);color:var(--ink);
-  background:color-mix(in srgb, var(--bg) 35%, transparent);cursor:pointer;text-decoration:none;
-  transition:background .25s,color .25s;backdrop-filter:blur(3px);
+.small{font-size:var(--fs-small);line-height:1.65}
+.meta{
+  margin-top:.9rem;
+  font-size:var(--fs-meta);letter-spacing:var(--ls-meta);text-transform:uppercase;
+  color:var(--key);
 }
-.cta a:hover{background:var(--key);color:var(--bg)}
-.cta a:focus-visible{outline:2px solid var(--key);outline-offset:3px}
+.pagenote{margin-top:2.5rem;max-width:var(--w-body)}
 
-/* manifesto */
+.body-copy{margin-top:2.2rem;max-width:var(--w-body);font-size:var(--fs-body);line-height:1.75}
 .manifesto-body{
   font-family:'Instrument Serif',serif;
-  font-size:clamp(1.02rem,1.45vw,1.25rem);line-height:1.6;max-width:30em;margin-top:2rem;
-  text-shadow:0 1px 20px color-mix(in srgb, var(--bg) 75%, transparent);
+  font-size:var(--fs-manifesto);line-height:1.5;max-width:var(--w-manifesto);margin-top:2.2rem;
+  text-shadow:0 1px 18px color-mix(in srgb, var(--bg) 70%, transparent);
 }
 .manifesto-body strong{font-weight:400;color:var(--key)}
-
-/* programmes */
-.prog{border-top:1px solid color-mix(in srgb, var(--ink) 16%, transparent);padding:2rem 0}
-.prog:last-of-type{border-bottom:1px solid color-mix(in srgb, var(--ink) 16%, transparent)}
-.prog h3{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(1.25rem,2.1vw,1.7rem);line-height:1.1;margin-bottom:.6rem}
-.prog .desc{max-width:38em;line-height:1.6}
-.prog .meta{margin-top:.9rem;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--key)}
-.notebox{margin-top:2.4rem;padding:1.2rem 1.4rem;border:1px solid color-mix(in srgb, var(--key) 55%, transparent);max-width:44em}
-
-/* agenda */
-.agrow{display:grid;grid-template-columns:9rem 1fr;gap:1.5rem;align-items:baseline;
-  padding:1.4rem 0;border-top:1px solid color-mix(in srgb, var(--ink) 16%, transparent)}
-.agrow:last-of-type{border-bottom:1px solid color-mix(in srgb, var(--ink) 16%, transparent)}
-.agrow .d{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--key)}
-.agrow .what{font-family:'Instrument Serif',serif;font-size:1.1rem}
-.agrow .where{font-size:.82rem;color:var(--dim);letter-spacing:.06em;margin-top:.15rem}
-.agrow.sample{opacity:.38}
-@media(max-width:680px){.agrow{grid-template-columns:1fr;gap:.3rem}}
-
-/* media */
-.vidgrid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-top:2.4rem}
-@media(max-width:820px){.vidgrid{grid-template-columns:1fr}}
-.vid .frame{aspect-ratio:16/9;width:100%;background:#000;border:1px solid color-mix(in srgb, var(--ink) 18%, transparent)}
-.vid iframe{width:100%;height:100%;border:0}
-.vid .cap{margin-top:.8rem;font-size:.82rem;line-height:1.55;color:var(--dim);max-width:40em}
-.vid .cap b{color:var(--key);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.72rem}
-.reclist{margin-top:3.5rem}
-.reclist .prog h3{font-size:clamp(1.1rem,1.8vw,1.4rem)}
-
-/* about / record */
-.record{margin-top:3rem;max-width:44em}
-.record h4{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--key);margin-bottom:1rem;font-weight:600}
-.record dl{display:grid;grid-template-columns:11rem 1fr;gap:.7rem 1.5rem;font-size:.88rem;line-height:1.55}
-.record dt{color:var(--dim);letter-spacing:.04em}
-.record dd{margin:0}
-@media(max-width:680px){.record dl{grid-template-columns:1fr;gap:.15rem}.record dd{margin-bottom:.7rem}}
-.page.has-photo .record{max-width:34rem}
-
-/* contact */
-.bigmail{font-family:'Instrument Serif',serif;font-size:clamp(1.25rem,2.6vw,2rem);
-  text-decoration:none;border-bottom:1px solid var(--key);display:inline-block;margin-top:2rem}
-.bigmail:hover{color:var(--key)}
-
-/* click-to-play video posters */
-.poster{position:relative;display:block;width:100%;height:100%;border:0;padding:0;cursor:pointer;background:#000}
-.poster img{width:100%;height:100%;object-fit:cover;opacity:.85;transition:opacity .25s}
-.poster:hover img{opacity:1}
-.poster .play{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  width:64px;height:64px;border-radius:50%;
-  border:1px solid var(--key);background:color-mix(in srgb, var(--bg) 55%, transparent);
-  color:var(--key);font-size:1.3rem;display:flex;align-items:center;justify-content:center;
-  transition:background .25s,color .25s;
+.manifesto-body em{font-style:italic}
+.signature{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:1.45rem;color:var(--key);margin-top:1.8rem;
 }
-.poster:hover .play{background:var(--key);color:var(--bg)}
 
-footer{position:relative;z-index:2;padding:2.5rem 2rem 2rem;text-align:center;
-  font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
-.todo{outline:1px dashed color-mix(in srgb, var(--key) 60%, transparent);outline-offset:3px}
+.cta{display:flex;flex-wrap:wrap;gap:1.6rem;margin-top:1.8rem}
+.cta a{
+  font-size:var(--fs-meta);letter-spacing:var(--ls-meta);text-transform:uppercase;font-weight:600;
+  text-decoration:none;padding-bottom:.35rem;
+  border-bottom:1px solid color-mix(in srgb, var(--key) 55%, transparent);
+  transition:color .25s,border-color .25s;
+}
+.cta a:hover{color:var(--key);border-bottom-color:var(--key)}
+
+.press{
+  display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;margin-top:2.4rem;
+  font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);
+}
+.centuries{
+  position:absolute;right:var(--gutter);bottom:2.5rem;
+  font-size:.72rem;letter-spacing:.3em;color:var(--key);
+}
+@media(max-width:980px){.centuries{display:none}}
+
+.quote{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:1.3rem;margin-top:2rem;color:var(--key);
+}
+.quote .who{
+  font-family:'Archivo',system-ui,sans-serif;font-style:normal;
+  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--dim);margin-top:.6rem;
+}
+
+/* ============================ home blocks ================================= */
+.homeblocks{position:relative;z-index:2;border-top:1px solid color-mix(in srgb, var(--ink) 12%, transparent)}
+.homeblocks .inner{padding-top:3.5rem;padding-bottom:4rem}
+.homeblocks-grid{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem}
+.homeblocks-grid>div+div{
+  padding-left:3.5rem;
+  border-left:1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+}
+.block-title{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(1.5rem,2.4vw,2rem);line-height:1.15;margin:.4rem 0 .8rem;
+}
+@media(max-width:820px){
+  .homeblocks-grid{grid-template-columns:1fr;gap:2.6rem}
+  .homeblocks-grid>div+div{
+    padding-left:0;padding-top:2.6rem;
+    border-left:0;border-top:1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  }
+}
+
+/* ======================== document rows (prog/research) =================== */
+.rows{margin-top:3rem}
+.prog{
+  padding:2.2rem 0;
+  border-top:1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+}
+.prog:last-child{border-bottom:1px solid color-mix(in srgb, var(--ink) 12%, transparent)}
+.prog-code{
+  font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:.7rem;
+}
+/*
+  Above 980px the row number hangs in a left gutter instead of stacking above
+  the title. Without it the whole document page reads as one narrow left-aligned
+  ribbon inside a 1180px column, which looks unbalanced on a wide screen.
+*/
+@media(min-width:981px){
+  .prog{display:grid;grid-template-columns:6rem 1fr;column-gap:2rem}
+  .prog-code{grid-column:1;grid-row:1 / span 6;margin-bottom:0;padding-top:.5rem}
+  .prog>:not(.prog-code){grid-column:2}
+}
+.prog h3{
+  font-family:'Instrument Serif',serif;font-weight:400;
+  font-size:var(--fs-prog);line-height:1.1;
+}
+.prog-sub{
+  font-family:'Instrument Serif',serif;font-style:italic;
+  font-size:var(--fs-prog-sub);line-height:1.3;color:var(--key);margin-top:.3rem;
+}
+.prog .desc{max-width:var(--w-body);margin-top:.9rem;line-height:1.7}
+.prog-link{margin-top:.9rem}
+.prog-link a{
+  font-size:var(--fs-meta);letter-spacing:var(--ls-meta);text-transform:uppercase;
+  color:var(--key);text-decoration:none;
+  border-bottom:1px solid color-mix(in srgb, var(--key) 45%, transparent);
+}
+.prog-link a:hover{border-bottom-color:var(--key)}
+
+.notebox{
+  margin-top:3.5rem;padding:2rem;max-width:var(--w-body);
+  border:1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+}
+.notebox h2{
+  font-family:'Instrument Serif',serif;font-weight:400;
+  font-size:1.6rem;line-height:1.15;margin-bottom:.9rem;
+}
+.notebox p{font-size:var(--fs-small);line-height:1.7;color:var(--dim)}
+
+/* ============================== agenda =================================== */
+.agenda-group{margin-top:3rem}
+.agenda-group>.eyebrow{margin-bottom:0}
+.agrow{
+  display:grid;grid-template-columns:7.5rem 1fr;gap:2rem;
+  padding:1.8rem 0;
+  border-top:1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+}
+.agenda-group .agrow:last-child{border-bottom:1px solid color-mix(in srgb, var(--ink) 12%, transparent)}
+.agdate{display:block;color:var(--key)}
+.agday{display:block;font-size:1.9rem;line-height:1;font-weight:500;letter-spacing:-.02em}
+.agmonth{font-size:.8rem;letter-spacing:var(--ls-meta);text-transform:uppercase}
+.agyear{font-size:.8rem;letter-spacing:var(--ls-meta);color:var(--dim);margin-left:.4rem}
+/* day sits above month+year, so a range like 22–24 never pushes the year down */
+.agday+.agmonth{display:inline-block;margin-top:.35rem}
+.agkind{
+  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:.45rem;
+}
+.agrow .what{
+  font-family:'Instrument Serif',serif;font-weight:400;
+  font-size:clamp(1.3rem,2vw,1.7rem);line-height:1.15;
+}
+.agrow .where{font-size:var(--fs-small);color:var(--key);margin-top:.25rem}
+.agdetail{font-size:var(--fs-small);line-height:1.65;color:var(--dim);margin-top:.7rem;max-width:var(--w-body)}
+@media(max-width:680px){
+  .agrow{grid-template-columns:1fr;gap:.7rem}
+}
+
+/*
+  Sections that follow a photo hero on their own clean ground. The portrait owns
+  the first viewport; lists and long copy start below it. Without this, agenda
+  rows ran straight across the B&W portrait — the one photograph bright enough
+  on its left half to swallow body copy.
+*/
+.listing{position:relative;z-index:2;border-top:1px solid color-mix(in srgb, var(--ink) 12%, transparent)}
+.listing .inner{padding-top:3.5rem;padding-bottom:4.5rem}
+.listing .contact-grid{margin-top:0}
+.listing .record{margin-top:0}
+
+/* ============================== videos =================================== */
+.vidgrid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem}
+@media(max-width:820px){.vidgrid{grid-template-columns:1fr;gap:2.4rem}}
+.vid .frame{aspect-ratio:16/9;background:#000;overflow:hidden;position:relative}
+.vid .frame iframe{width:100%;height:100%;border:0;display:block}
+.vid .meta{margin-top:1rem}
+.vid-title{
+  font-family:'Instrument Serif',serif;font-weight:400;
+  font-size:clamp(1.4rem,2.2vw,1.8rem);line-height:1.1;margin-top:.35rem;
+}
+.vid-work{font-family:'Instrument Serif',serif;font-style:italic;font-size:1.1rem;color:var(--key);margin-top:.2rem}
+.vid .small{margin-top:.8rem;max-width:40em}
+
+.poster{
+  display:block;width:100%;height:100%;padding:0;border:0;background:#000;
+  position:relative;cursor:pointer;color:var(--ink);
+}
+.poster img{width:100%;height:100%;object-fit:cover;transition:opacity .3s,transform .5s var(--ease)}
+.poster:hover img{opacity:.8;transform:scale(1.02)}
+.play{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:.4rem;
+}
+.play-icon{
+  display:flex;align-items:center;justify-content:center;
+  width:3.4rem;height:3.4rem;border-radius:50%;
+  border:1px solid color-mix(in srgb, var(--ink) 70%, transparent);
+  background:color-mix(in srgb, #000 45%, transparent);
+  font-size:1rem;padding-left:.2rem;
+  transition:background .25s,border-color .25s;
+}
+.poster:hover .play-icon{background:color-mix(in srgb, var(--key) 80%, transparent);border-color:var(--key);color:#000}
+.play-label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase}
+
+.reclist{margin-top:4.5rem}
+
+/* ========================= record / short bio ============================= */
+.record{margin-top:3.5rem}
+.record h2{
+  font-size:var(--fs-meta);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--key);font-weight:600;margin-bottom:1.2rem;
+}
+.record dl{
+  display:grid;grid-template-columns:12rem 1fr;gap:.55rem 1.8rem;
+  font-size:var(--fs-small);line-height:1.6;
+}
+.record dt{color:var(--dim)}
+@media(max-width:680px){
+  .record dl{grid-template-columns:1fr;gap:.2rem}
+  .record dt{margin-top:.9rem}
+}
+
+.shortbio{
+  margin-top:3.5rem;padding-top:2rem;
+  border-top:1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  max-width:var(--w-body);
+}
+.shortbio p{font-size:var(--fs-small);line-height:1.7}
+.shortbio .small{margin-top:1.2rem;color:var(--dim)}
+
+/* ============================== contact ================================== */
+.bigmail{
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(1.6rem,4.2vw,3rem);line-height:1.1;margin-top:2.2rem;
+  word-break:break-word;
+}
+.bigmail a{text-decoration:none;border-bottom:1px solid color-mix(in srgb, var(--key) 55%, transparent)}
+.bigmail a:hover{color:var(--key);border-bottom-color:var(--key)}
+.contact-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem;
+  margin-top:3.5rem;
+}
+.contact-grid .eyebrow{margin-bottom:.8rem}
+.contact-grid .cta{margin-top:1rem}
+@media(max-width:820px){.contact-grid{grid-template-columns:1fr;gap:2.2rem}}
+
+/* =============================== footer ================================== */
+footer{
+  position:relative;z-index:2;
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:.6rem 2rem;
+  padding:2rem var(--gutter);
+  border-top:1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  font-size:.78rem;letter-spacing:.1em;
+}
+footer a{text-decoration:none;color:var(--key)}
+footer a:hover{text-decoration:underline}
+footer>span:nth-child(2){margin-right:auto}
+
+@media print{
+  .site-header,.skip,.env,body::after,.poster,.cta{display:none}
+  .inner{padding-top:0}
+  html,body{background:#fff;color:#000}
+}

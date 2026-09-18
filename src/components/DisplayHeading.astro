@@ -3,6 +3,6 @@ interface Props {
   text: string;
   italic?: boolean;
 }
-const { text, italic = false } = Astro.props;
+const { text, italic } = Astro.props;
 ---
 <h1 class:list={['display', { it: italic }]} data-text={text}>{text}</h1>

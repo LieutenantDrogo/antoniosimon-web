@@ -1,21 +1,29 @@
 ---
-// Renders v10's .prog block. Reused across Programmes (title+desc+meta),
-// Media's Recordings & screen (title+desc, no meta), and Research
-// (title+descHtml, no meta) — matching v10's own reuse of one .prog class.
+/**
+ * One row of a document page. Used by Programmes (title + subtitle + desc + meta)
+ * and Research (code + title + desc + meta) — same visual grammar, different fields.
+ */
 interface Props {
+  code?: string;
   title: string;
-  desc?: string;
-  descHtml?: string;
-  descClass?: string;
+  subtitle?: string;
+  desc: string;
   meta?: string;
+  url?: string;
+  urlLabel?: string;
+  descClass?: string;
 }
-const { title, desc, descHtml, descClass, meta } = Astro.props;
-const pClass = ['desc', descClass].filter(Boolean).join(' ');
+const { code, title, subtitle, desc, meta, url, urlLabel, descClass = 'desc' } = Astro.props;
 ---
-<div class="prog">
+<article class="prog">
+  {code && <p class="prog-code">{code}</p>}
   <h3>{title}</h3>
-  {descHtml
-    ? <p class={pClass} set:html={descHtml} />
-    : <p class={pClass}>{desc}</p>}
-  {meta && <div class="meta">{meta}</div>}
-</div>
+  {subtitle && <p class="prog-sub">{subtitle}</p>}
+  <p class={descClass}>{desc}</p>
+  {meta && <p class="meta">{meta}</p>}
+  {url && urlLabel && (
+    <p class="prog-link">
+      <a href={url} rel="noopener">{urlLabel} <span aria-hidden="true">↗</span></a>
+    </p>
+  )}
+</article>

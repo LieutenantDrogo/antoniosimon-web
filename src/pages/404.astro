@@ -1,0 +1,39 @@
+---
+// Cloudflare Pages serves /404.html for any unmatched path, so this page has to
+// stand alone: it is bilingual and does not assume which language the visitor
+// was heading for. Not a PageId, so it builds its own <head> rather than using
+// BaseLayout's content lookup.
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+import { routes } from '../data/routes';
+---
+<html lang="en" data-page="programmes">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page not found — Antonio Simón</title>
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#0e0f10" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="preload" href="/fonts/instrument-serif-400.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/archivo-400.woff2" as="font" type="font/woff2" crossorigin />
+  <ClientRouter />
+</head>
+<body>
+  <main id="main">
+    <section class="page">
+      <div class="inner">
+        <p class="eyebrow">404</p>
+        <h1 class="display" data-text="Not here">Not here</h1>
+        <p class="lede">This page does not exist, or it has moved.</p>
+        <p class="lede dim" lang="es">Esta página no existe, o ha cambiado de sitio.</p>
+        <p class="cta">
+          <a href={routes.home.en}>Home <span aria-hidden="true">↗</span></a>
+          <a href={routes.home.es} lang="es">Inicio <span aria-hidden="true">↗</span></a>
+        </p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

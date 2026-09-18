@@ -1,5 +1,5 @@
 ---
-import { routes, navOrder, navLabels } from '../data/routes';
+import { routes, navOrder, menuOrder, navLabels, homeMenuLabel, uiStrings } from '../data/routes';
 import type { PageId, Lang } from '../data/routes';
 import LangSwitch from './LangSwitch.astro';
 
@@ -8,19 +8,92 @@ interface Props {
   lang: Lang;
 }
 const { pageId, lang } = Astro.props;
+const menuLabel = (id: PageId) => (id === 'home' ? homeMenuLabel[lang] : navLabels[id][lang]);
 ---
-<nav aria-label={lang === 'en' ? 'Primary' : 'Principal'}>
+<header class="site-header" data-header>
   <a class="brand" href={routes.home[lang]}>{navLabels.home[lang]}</a>
-  <ul class="navlist">
-    {navOrder.map((id) => (
-      <li>
-        <a
-          data-nav={id}
-          href={routes[id][lang]}
-          aria-current={id === pageId ? 'page' : undefined}
-        >{navLabels[id][lang]}</a>
-      </li>
-    ))}
-  </ul>
-  <LangSwitch pageId={pageId} lang={lang} />
-</nav>
+
+  <nav class="desknav" aria-label={uiStrings.primaryNav[lang]}>
+    <ul>
+      {navOrder.map((id) => (
+        <li>
+          <a href={routes[id][lang]} aria-current={id === pageId ? 'page' : undefined}
+            >{navLabels[id][lang]}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <div class="header-actions">
+    <LangSwitch pageId={pageId} lang={lang} />
+
+    {/* <details> so the menu works with JavaScript disabled; the script below only
+        adds Escape / outside-click / breakpoint closing. ClientRouter replaces
+        <body> on every navigation, so it also closes itself on navigating. */}
+    <details class="menu" data-menu>
+      <summary data-menu-button>
+        <span>{uiStrings.menu[lang]}</span>
+        <span class="menu-glyph" aria-hidden="true"></span>
+      </summary>
+      <nav class="menupanel" aria-label={lang === 'en' ? 'Sections' : 'Secciones'}>
+        <ul>
+          {menuOrder.map((id, i) => (
+            <li>
+              <a href={routes[id][lang]} aria-current={id === pageId ? 'page' : undefined}>
+                <span class="menu-no" aria-hidden="true">{String(i).padStart(2, '0')}</span>
+                <span>{menuLabel(id)}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  // The site's only page-level script besides the video facade (BUILD.md §2.10).
+  // astro:page-load, not DOMContentLoaded — the latter never refires after a
+  // client-side navigation, which would leave the header dead on every route
+  // reached through ClientRouter.
+  function initHeader() {
+    const header = document.querySelector<HTMLElement>('[data-header]');
+    if (!header) return;
+    const menu = header.querySelector<HTMLDetailsElement>('[data-menu]');
+    const button = header.querySelector<HTMLElement>('[data-menu-button]');
+    const desktop = window.matchMedia('(min-width: 1080px)');
+
+    let ticking = false;
+    const applyScroll = () => {
+      ticking = false;
+      header.classList.toggle('is-scrolled', window.scrollY > 18);
+    };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(applyScroll);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    applyScroll();
+
+    if (!menu) return;
+    const close = (refocus = false) => {
+      if (!menu.open) return;
+      menu.open = false;
+      if (refocus) button?.focus();
+    };
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close(true);
+    });
+    document.addEventListener('pointerdown', (e) => {
+      if (menu.open && !menu.contains(e.target as Node)) close();
+    });
+    document.addEventListener('focusin', (e) => {
+      if (menu.open && !menu.contains(e.target as Node)) close();
+    });
+    desktop.addEventListener('change', () => close());
+  }
+
+  document.addEventListener('astro:page-load', initHeader);
+</script>

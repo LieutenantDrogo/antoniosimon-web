@@ -1,32 +1,96 @@
-2026-stanford:
-  dateLabel:
-    en: "2026 · date TBC"
-    es: "2026 · por confirmar"
-  what:
-    en: "Beethoven op. 111 — lecture-recital"
-    es: "Beethoven op. 111 — conferencia-concierto"
-  where: "Stanford University, California"
-  tbc: true
-  order: 1
+# Public, confirmed engagements only. Source: Career Atlas (engagements, status: confirmed).
+# Nothing from ventures, contacts, fees or negotiations is published here.
+# Adding a date = adding a keyed block below; the page sorts and splits
+# upcoming/recent by `date` at build time.
 
-sample-1:
-  dateLabel: { en: "—", es: "—" }
+obs-sevilla-2027:
+  date: "2027-04-01"
+  kind:
+    en: "Concert"
+    es: "Concierto"
   what:
-    en: "[Programme]"
-    es: "[Programa]"
+    en: "Beethoven / Hummel"
+    es: "Beethoven / Hummel"
   where:
-    en: "[Venue · City]"
-    es: "[Sala · Ciudad]"
-  sample: true
-  order: 2
+    en: "Espacio Turina, Seville"
+    es: "Espacio Turina, Sevilla"
+  detail:
+    en: "Beethoven’s Fifth and Seventh Symphonies in Hummel’s 1827 chamber arrangements, with soloists of the Orquesta Barroca de Sevilla."
+    es: "Las sinfonías Quinta y Séptima de Beethoven en los arreglos de cámara de Hummel de 1827, con solistas de la Orquesta Barroca de Sevilla."
 
-sample-2:
-  dateLabel: { en: "—", es: "—" }
+alhaurin-2027:
+  date: "2027-05-08"
+  kind:
+    en: "Concert"
+    es: "Concierto"
   what:
-    en: "[Programme]"
-    es: "[Programa]"
+    en: "Beethoven & Schubert"
+    es: "Beethoven y Schubert"
   where:
-    en: "[Venue · City]"
-    es: "[Sala · Ciudad]"
-  sample: true
-  order: 3
+    en: "Ciclo Cámara Alhaurín, Málaga"
+    es: "Ciclo Cámara Alhaurín, Málaga"
+  detail:
+    en: "Beethoven’s Moonlight Sonata and Schubert’s Fantasy for piano four hands, with Juan Ignacio Fernández."
+    es: "La sonata Claro de luna de Beethoven y la Fantasía a cuatro manos de Schubert, con Juan Ignacio Fernández."
+
+perugia-2027:
+  date: "2027-06-21"
+  kind:
+    en: "Lecture-recital"
+    es: "Conferencia-concierto"
+  what:
+    en: "Beethoven, op. 111"
+    es: "Beethoven, op. 111"
+  where:
+    en: "Conservatorio di Perugia"
+    es: "Conservatorio di Perugia"
+  detail:
+    en: "From Reconstruction to Re-Creation. Perugia Historical Piano International Forum."
+    es: "De la reconstrucción a la recreación. Perugia Historical Piano International Forum."
+
+unicaja-2027:
+  date: "2027-09"
+  dayTbc: true
+  kind:
+    en: "Music & poetry"
+    es: "Música y poesía"
+  what:
+    en: "Generación del 27"
+    es: "Generación del 27"
+  where:
+    en: "Fundación Unicaja, Málaga"
+    es: "Fundación Unicaja, Málaga"
+  detail:
+    en: "Spanish piano music of the 1920s and 30s with the poets of the Generación del 27. Day, venue and programme to be announced."
+    es: "Música española para piano de los años veinte y treinta junto a los poetas de la Generación del 27. Día, sala y programa por anunciar."
+
+verbania-2027:
+  date: "2027-10-22"
+  endDate: "2027-10-24"
+  kind:
+    en: "Masterclass"
+    es: "Clase magistral"
+  what:
+    en: "Liszt, Sonata in B minor"
+    es: "Liszt, Sonata en si menor"
+  where:
+    en: "Verbania, Italy"
+    es: "Verbania, Italia"
+  detail:
+    en: "Weekend course within the Liszt cycle of the Centro Studi e Ricerche del Pianoforte Romantico, on historical Pleyel and Érard pianos."
+    es: "Curso de fin de semana dentro del ciclo Liszt del Centro Studi e Ricerche del Pianoforte Romantico, con pianos históricos Pleyel y Érard."
+
+stanford-2026:
+  date: "2026-08-08"
+  kind:
+    en: "Lecture-recital"
+    es: "Conferencia-concierto"
+  what:
+    en: "Beethoven’s Op. 111 and the Romantic Paradigm"
+    es: "Beethoven’s Op. 111 and the Romantic Paradigm"
+  where:
+    en: "Braun Music Center, Stanford University"
+    es: "Braun Music Center, Stanford University"
+  detail:
+    en: "From Reconstruction to Re-Creation. 4th Global Piano Roll Meeting."
+    es: "De la reconstrucción a la recreación. 4th Global Piano Roll Meeting."

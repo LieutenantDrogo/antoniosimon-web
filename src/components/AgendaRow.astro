@@ -1,16 +1,31 @@
 ---
 interface Props {
-  dateLabel: string;
+  day?: string;
+  month: string;
+  year: string;
+  dateTime: string;
+  kind: string;
   what: string;
-  where?: string;
-  sample?: boolean;
+  where: string;
+  detail?: string;
+  url?: string;
+  urlLabel?: string;
 }
-const { dateLabel, what, where, sample = false } = Astro.props;
+const { day, month, year, dateTime, kind, what, where, detail, url, urlLabel } = Astro.props;
 ---
-<div class:list={['agrow', { sample }]}>
-  <div class="d">{dateLabel}</div>
-  <div>
-    <div class="what">{what}</div>
-    {where && <div class="where">{where}</div>}
+<article class="agrow">
+  <time class="agdate" datetime={dateTime}>
+    {day && <span class="agday">{day}</span>}
+    <span class="agmonth">{month}</span>
+    <span class="agyear">{year}</span>
+  </time>
+  <div class="agbody">
+    <p class="agkind">{kind}</p>
+    <h3 class="what">{what}</h3>
+    <p class="where">{where}</p>
+    {detail && <p class="agdetail">{detail}</p>}
+    {url && urlLabel && (
+      <p class="prog-link"><a href={url} rel="noopener">{urlLabel} <span aria-hidden="true">↗</span></a></p>
+    )}
   </div>
-</div>
+</article>

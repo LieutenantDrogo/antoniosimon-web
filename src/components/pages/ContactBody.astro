@@ -1,0 +1,65 @@
+---
+import { getEntry } from 'astro:content';
+import PhotoEnv from '../PhotoEnv.astro';
+import PageHead from '../PageHead.astro';
+import { routes } from '../../data/routes';
+import type { Lang } from '../../data/routes';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+
+const page = (await getEntry('pages', 'contact'))!.data;
+const site = (await getEntry('site', 'site'))!.data;
+
+const blocks = [
+  {
+    h: { en: 'Programming', es: 'Programación' },
+    p: {
+      en: 'Tell me the idea, the hall and the dates you have in mind. Repertoire, format and instrument are worked out from there — including whether a fortepiano should travel.',
+      es: 'Cuénteme la idea, la sala y las fechas que tiene en mente. El repertorio, el formato y el instrumento se resuelven a partir de ahí, incluido si conviene que viaje un fortepiano.',
+    },
+    link: { label: { en: 'Programmes', es: 'Programas' }, page: 'programmes' as const },
+  },
+  {
+    h: { en: 'Academic', es: 'Académico' },
+    p: {
+      en: 'Lectures, seminars, masterclasses and collaborations on Romantic performance practice, early recordings and reproducing piano rolls.',
+      es: 'Conferencias, seminarios, clases magistrales y colaboraciones sobre práctica interpretativa romántica, primeras grabaciones y rollos de piano reproductor.',
+    },
+    link: { label: { en: 'Research', es: 'Investigación' }, page: 'research' as const },
+  },
+  {
+    h: { en: 'Press', es: 'Prensa' },
+    p: {
+      en: 'A short biography in English and Spanish is on the biography page, ready to copy. Photographs and further material by email.',
+      es: 'En la página de biografía hay una biografía breve en español e inglés, lista para copiar. Fotografías y otros materiales, por correo.',
+    },
+    link: { label: { en: 'Biography', es: 'Biografía' }, page: 'about' as const },
+  },
+];
+---
+<section class="page has-photo">
+  <PhotoEnv photo="contact" lang={lang} />
+  <div class="inner">
+    <div class="content">
+      <PageHead eyebrow={page.eyebrow[lang]} display={page.display[lang]} lede={page.lede?.[lang]} />
+
+      <p class="bigmail"><a href={`mailto:${site.email}`}>{site.email}</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="listing">
+  <div class="inner">
+    <div class="contact-grid">
+      {blocks.map((b) => (
+        <div>
+          <h2 class="eyebrow">{b.h[lang]}</h2>
+          <p class="small">{b.p[lang]}</p>
+          <p class="cta"><a href={routes[b.link.page][lang]}>{b.link.label[lang]} <span aria-hidden="true">↗</span></a></p>
+        </div>
+      ))}
+    </div>
+    <p class="meta">{site.city[lang]} · {site.reach[lang]}</p>
+  </div>
+</section>

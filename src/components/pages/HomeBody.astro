@@ -1,0 +1,78 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import PhotoEnv from '../PhotoEnv.astro';
+import PageHead from '../PageHead.astro';
+import { routes } from '../../data/routes';
+import type { Lang } from '../../data/routes';
+import { formatEventDate, isUpcoming } from '../../data/i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+
+const page = (await getEntry('pages', 'home'))!.data;
+const site = (await getEntry('site', 'site'))!.data;
+const recordings = (await getCollection('recordings')).sort((a, b) => a.data.order - b.data.order);
+const featured = recordings[0].data;
+
+// "Next appearance" is derived, never hand-maintained: the earliest agenda entry
+// that has not happened yet. Day-less dates ('2027-09') compare correctly as
+// strings because ISO prefixes sort lexicographically.
+const today = new Date().toISOString().slice(0, 10);
+const next = (await getCollection('agenda'))
+  .filter((e) => isUpcoming(e.data.date, e.data.endDate, today))
+  .sort((a, b) => a.data.date.localeCompare(b.data.date))[0];
+
+const nextDate = next ? formatEventDate(next.data.date, next.data.endDate, lang) : null;
+const label = {
+  studio: { en: 'In the studio', es: 'En el estudio' },
+  next: { en: 'Next appearance', es: 'Próxima cita' },
+  more: { en: 'Recordings', es: 'Grabaciones' },
+  agenda: { en: 'Full agenda', es: 'Agenda completa' },
+};
+---
+<section class="page has-photo">
+  <PhotoEnv photo="hero" lang={lang} priority />
+  <div class="inner">
+    <div class="content">
+      <PageHead
+        eyebrow={page.eyebrow[lang]}
+        display={page.display[lang]}
+        kicker={page.kicker?.[lang]}
+        lede={page.lede?.[lang]}
+      />
+      <p class="cta">
+        {page.cta?.map((c) => (
+          <a href={routes[c.page][lang]}>{c.label[lang]} <span aria-hidden="true">↗</span></a>
+        ))}
+      </p>
+      <p class="press">{site.press.map((p) => <span>{p}</span>)}</p>
+    </div>
+    <p class="centuries" aria-hidden="true">XIX <span>——</span> XXI</p>
+  </div>
+</section>
+
+<section class="homeblocks">
+  <div class="inner homeblocks-grid">
+    <div>
+      <h2 class="eyebrow">{label.studio[lang]}</h2>
+      <p class="block-title">{featured.title[lang]}</p>
+      <p class="small dim">{featured.desc[lang]}</p>
+      {featured.meta && <p class="meta">{featured.meta[lang]}</p>}
+      <p class="cta"><a href={routes.listen[lang]}>{label.more[lang]} <span aria-hidden="true">↗</span></a></p>
+    </div>
+    {next && nextDate && (
+      <div>
+        <h2 class="eyebrow">{label.next[lang]}</h2>
+        <p class="meta">
+          <time datetime={next.data.date}>
+            {nextDate.day ? `${nextDate.day} ` : ''}{nextDate.month} {nextDate.year}
+          </time>
+          {' · '}{typeof next.data.where === 'string' ? next.data.where : next.data.where[lang]}
+        </p>
+        <p class="block-title">{next.data.what[lang]}</p>
+        {next.data.detail && <p class="small dim">{next.data.detail[lang]}</p>}
+        <p class="cta"><a href={routes.agenda[lang]}>{label.agenda[lang]} <span aria-hidden="true">↗</span></a></p>
+      </div>
+    )}
+  </div>
+</section>

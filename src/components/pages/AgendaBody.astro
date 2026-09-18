@@ -1,0 +1,72 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import PhotoEnv from '../PhotoEnv.astro';
+import PageHead from '../PageHead.astro';
+import AgendaRow from '../AgendaRow.astro';
+import { uiStrings } from '../../data/routes';
+import type { Lang } from '../../data/routes';
+import { formatEventDate, isUpcoming, pick } from '../../data/i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+
+const page = (await getEntry('pages', 'agenda'))!.data;
+const today = new Date().toISOString().slice(0, 10);
+
+const all = (await getCollection('agenda')).map((e) => e.data);
+const upcoming = all
+  .filter((e) => isUpcoming(e.date, e.endDate, today))
+  .sort((a, b) => a.date.localeCompare(b.date));
+const recent = all
+  .filter((e) => !isUpcoming(e.date, e.endDate, today))
+  .sort((a, b) => b.date.localeCompare(a.date));
+
+const tbc = { en: 'Day to be announced', es: 'Día por confirmar' };
+const details = { en: 'Details', es: 'Detalles' };
+
+const groups = [
+  { label: uiStrings.upcoming[lang], rows: upcoming },
+  { label: uiStrings.recent[lang], rows: recent },
+].filter((g) => g.rows.length > 0);
+---
+{/*
+  The portrait keeps the first viewport to itself and the list starts below it
+  on clean ground. The agenda photograph is the one with a bright left half, so
+  rows running across it were the least legible thing on the site.
+*/}
+<section class="page has-photo">
+  <PhotoEnv photo="agenda" lang={lang} />
+  <div class="inner">
+    <div class="content">
+      <PageHead eyebrow={page.eyebrow[lang]} display={page.display[lang]} lede={page.lede?.[lang]} />
+    </div>
+  </div>
+</section>
+
+<section class="listing">
+  <div class="inner">
+    {groups.map((group) => (
+      <section class="agenda-group">
+        <h2 class="eyebrow">{group.label}</h2>
+        {group.rows.map((e) => {
+          const d = formatEventDate(e.date, e.endDate, lang);
+          return (
+            <AgendaRow
+              day={d.day}
+              month={d.month}
+              year={d.year}
+              dateTime={e.date}
+              kind={e.dayTbc ? `${e.kind[lang]} · ${tbc[lang]}` : e.kind[lang]}
+              what={e.what[lang]}
+              where={pick(e.where, lang)}
+              detail={e.detail?.[lang]}
+              url={e.url}
+              urlLabel={e.url ? details[lang] : undefined}
+            />
+          );
+        })}
+      </section>
+    ))}
+    <p class="small dim pagenote">{page.note?.[lang]}</p>
+  </div>
+</section>

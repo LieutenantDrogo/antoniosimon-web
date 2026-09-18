@@ -1,7 +1,9 @@
-La música clásica ha olvidado cómo hablaba. Los rollos de pianola, las primeras grabaciones y los tratados documentan una gramática que el siglo XX suprimió: manos que no coinciden, acordes abiertos en arpegio, un rubato que dobla la estructura, el pedal como agente dramático. Toco como si esa gramática nunca hubiera sido proscrita.
+El siglo XIX escribió menos de lo que sabía. Manos que no atacan a la vez; acordes abiertos en lugar de golpeados; un tempo que cede a la forma de la frase; un pedal al servicio del drama y no de la costura. Los tratados describen todo esto como algo corriente. Las primeras grabaciones y los rollos de piano reproductor lo muestran hecho, por quienes estudiaron con los compositores. Nada de ello era exótico. Era, sencillamente, cómo se hablaba esa lengua.
 
-Lo dijo Verdi: **torniamo all’antico, e sarà un progresso** — volvamos a lo antiguo: será un progreso. El pasado es la vanguardia.
+Casi toda esa gramática ha abandonado las salas de concierto, y su ausencia apenas se advierte. La lectura limpia, vertical, sincronizada, parece contención: fidelidad, respeto, dejar la música en paz. No es nada de eso. Es un estilo del siglo XX, tan histórico como cualquier otro, proyectado hacia atrás y confundido con la ausencia de estilo. **El anacronismo no es la mano disociada. Es la mano pulcra.**
 
-No se trata de instrumentos de museo. Toco fortepianos porque afilan el argumento, y pianos modernos porque el argumento viaja. El instrumento no es la tesis; la interpretación lo es.
+No restauro nada. Las fuentes son fragmentarias, se contradicen entre sí y cada una pertenece a un cuerpo concreto en una sala concreta. Lo que ofrecen no es un manual de instrucciones, sino un campo más ancho de lecturas legítimas: una obra abierta cuya apertura se ha ganado por la vía de la restricción. El consejo de Verdi se sostiene: *torniamo all'antico, e sarà un progresso.* El regreso es la forma de avanzar.
 
-Los románticos no eran corteses. Esto tampoco.
+Los instrumentos históricos forman parte de este trabajo, no como piezas de patrimonio sino como instrumentos de percepción. Un Leschen de 1830 o una copia de Graf responden de otro modo a la mano y hablan de otro modo en una sala, y lo que enseñan no se queda atrás cuando me siento a un piano moderno. El instrumento no es la tesis. Es donde la tesis se vuelve audible.
+
+Así que elijo, y lo digo. Dentro de lo que las fuentes permiten y respondiendo ante ellas, lo que significa que la apuesta puede fallar en la sala, delante de quien escucha, que es donde debe dirimirse una afirmación sobre música.

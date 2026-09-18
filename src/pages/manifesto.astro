@@ -1,32 +1,9 @@
 ---
-import { getEntry, render } from 'astro:content';
+// Route wrapper. All markup lives in the shared body component so the EN and ES
+// routes cannot drift apart; all copy lives in src/content/.
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PhotoEnv from '../components/PhotoEnv.astro';
-import DisplayHeading from '../components/DisplayHeading.astro';
-
-const lang = 'en';
-const page = await getEntry('pages', 'manifesto');
-if (!page) throw new Error('Missing pages entry: manifesto');
-const manifestoEntry = await getEntry('manifesto', `manifesto.${lang}`);
-if (!manifestoEntry) throw new Error('Missing manifesto entry: en');
-const { Content } = await render(manifestoEntry);
+import ManifestoBody from '../components/pages/ManifestoBody.astro';
 ---
-<BaseLayout
-  pageId="manifesto"
-  lang={lang}
-  title="Manifesto — Antonio Simón"
-  description={page.data.metaDescription[lang]}
->
-  <section class="page has-photo">
-    <PhotoEnv slot="manifesto" />
-    <div class="inner">
-      <div class="content">
-        <div class="eyebrow">{page.data.eyebrow[lang]}</div>
-        <DisplayHeading text={page.data.display} italic={page.data.displayItalic} />
-        <div class="manifesto-body">
-          <Content />
-        </div>
-      </div>
-    </div>
-  </section>
+<BaseLayout pageId="manifesto" lang="en">
+  <ManifestoBody lang="en" />
 </BaseLayout>

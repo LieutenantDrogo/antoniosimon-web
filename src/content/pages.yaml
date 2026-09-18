@@ -1,101 +1,162 @@
 home:
+  title:
+    en: "Antonio Simón — pianist & fortepianist"
+    es: "Antonio Simón — pianista y fortepianista"
   eyebrow:
-    en: "Pianist & fortepianist"
-    es: "Pianista y fortepianista"
-  display: "Antonio Simón"
+    en: "Piano, fortepiano & historical keyboards"
+    es: "Piano, fortepiano y teclados históricos"
+  display:
+    en: "Antonio Simón"
+    es: "Antonio Simón"
+  kicker:
+    en: "Romanticism under altered light."
+    es: "El Romanticismo, bajo otra luz."
   lede:
-    en: "The Romantic repertoire in its own forgotten grammar — dislocated, arpeggiated, dramatically pedalled. On fortepianos, and on the modern piano."
-    es: "El repertorio romántico en su propia gramática olvidada: manos disociadas, acordes arpegiados, pedal dramático. Con fortepianos, y con el piano moderno."
+    en: "A nineteenth-century score is a compressed transmission: it assumed a grammar nobody needed to write down. Treatises, early recordings and reproducing piano rolls give part of that grammar back. They do not prescribe. They widen the space I play in."
+    es: "Una partitura del siglo XIX es una transmisión comprimida: da por supuesta una gramática que nadie necesitaba escribir. Los tratados, las primeras grabaciones y los rollos de piano reproductor devuelven parte de esa gramática. No prescriben: ensanchan el espacio en el que toco."
   metaDescription:
-    en: "Antonio Simón — pianist & fortepianist. The Romantic repertoire in its own forgotten grammar, on fortepianos and the modern piano."
-    es: "Antonio Simón — pianista y fortepianista. El repertorio romántico en su propia gramática olvidada, con fortepianos y piano moderno."
+    en: "Antonio Simón, pianist and fortepianist. The Classical and Romantic repertoire played in its own grammar, on period instruments and on the modern piano."
+    es: "Antonio Simón, pianista y fortepianista. El repertorio clásico y romántico tocado en su propia gramática, con instrumentos de época y con piano moderno."
   cta:
-    - label: { en: "Watch", es: "Ver y escuchar" }
-      page: media
+    - label: { en: "Listen", es: "Escuchar" }
+      page: listen
     - label: { en: "Programmes", es: "Programas" }
       page: programmes
 
 manifesto:
+  title:
+    en: "Manifesto — Antonio Simón"
+    es: "Manifiesto — Antonio Simón"
   eyebrow:
     en: "Manifesto"
     es: "Manifiesto"
-  display: "Torniamo all’antico"
+  display:
+    en: "Torniamo all’antico"
+    es: "Torniamo all’antico"
   displayItalic: true
-  metaDescription:
-    en: "Torniamo all’antico: the past is the avant-garde. A manifesto for playing the Romantic repertoire in its own suppressed grammar."
-    es: "Torniamo all’antico: el pasado es la vanguardia. Un manifiesto para tocar el repertorio romántico en su gramática suprimida."
-
-programmes:
-  eyebrow:
-    en: "Programmes"
-    es: "Programas"
-  display: "Built to travel"
   lede:
-    en: "Each programme is a finished product: titled, timed, with forces and instrument requirements stated. All of them travel — on period instruments where the hall allows it, on the modern piano where it doesn’t."
-    es: "Cada programa es un producto terminado: con título, duración, plantilla y requisitos de instrumento. Todos viajan: con instrumentos de época cuando la sala lo permite, y con piano moderno cuando no."
+    en: "Return to the old, and it will be progress. Verdi wrote it as advice to a young composer; it works just as well as a working method."
+    es: "Volvamos a lo antiguo: será un progreso. Verdi se lo escribió a un joven compositor; funciona igual de bien como método de trabajo."
   metaDescription:
-    en: "Four touring programmes for festivals and concert series — titled, timed, with forces and instrument requirements stated."
-    es: "Cuatro programas de gira para festivales y temporadas — con título, duración, plantilla y requisitos de instrumento."
-  notebox:
-    en: "Original fortepianos and copies from my own collection can travel to the venue. Ask."
-    es: "Los fortepianos de mi colección —originales y copias— pueden desplazarse a la sala. Pregúnteme."
+    en: "The clean, synchronised reading is a twentieth-century style, not the absence of style. A manifesto for playing Romantic music in its own documented grammar."
+    es: "La lectura limpia y sincronizada es un estilo del siglo XX, no la ausencia de estilo. Un manifiesto para tocar la música romántica en su gramática documentada."
 
-agenda:
+listen:
+  title:
+    en: "Listen — Antonio Simón"
+    es: "Escuchar — Antonio Simón"
   eyebrow:
-    en: "Agenda"
-    es: "Agenda"
-  display: "Agenda"
+    en: "Listen"
+    es: "Escuchar"
+  display:
+    en: "Listen first"
+    es: "Escuchar primero"
+  lede:
+    en: "Two performances, two instruments, one grammar. The practice does not depend on the hardware — which is the whole point of putting these two side by side."
+    es: "Dos interpretaciones, dos instrumentos, una sola gramática. La práctica no depende del instrumento, que es justamente lo que se juega al ponerlas una junto a otra."
   metaDescription:
-    en: "Upcoming concerts and lecture-recitals by pianist and fortepianist Antonio Simón."
-    es: "Próximos conciertos y conferencias-concierto del pianista y fortepianista Antonio Simón."
-  note:
-    en: "For the updated agenda or to propose a date, write to me."
-    es: "Para la agenda actualizada o para proponer una fecha, escríbame."
-
-media:
-  eyebrow:
-    en: "Media"
-    es: "Medios"
-  display: "Listen first"
-  metaDescription:
-    en: "Watch and listen: lecture-recitals, recordings and screen appearances by Antonio Simón."
-    es: "Vea y escuche: conferencias-concierto, grabaciones y apariciones en pantalla de Antonio Simón."
+    en: "Video performances and recordings by Antonio Simón: Schubert on fortepiano, Scriabin on modern piano, and the Liszt discography."
+    es: "Vídeos y grabaciones de Antonio Simón: Schubert al fortepiano, Scriabin al piano moderno y la discografía lisztiana."
   reclistEyebrow:
     en: "Recordings & screen"
     es: "Grabaciones y pantalla"
 
+programmes:
+  title:
+    en: "Programmes — Antonio Simón"
+    es: "Programas — Antonio Simón"
+  eyebrow:
+    en: "Programmes"
+    es: "Programas"
+  display:
+    en: "Programmes that travel"
+    es: "Programas que viajan"
+  lede:
+    en: "Five programmes built as finished objects: a title, an argument, and the instrument each one wants. All of them travel — on period instruments where a hall can host them, on the modern piano where it cannot. The argument survives the change."
+    es: "Cinco programas concebidos como objetos acabados: un título, un argumento y el instrumento que cada uno pide. Todos viajan: con instrumentos de época cuando la sala puede acogerlos, con piano moderno cuando no. El argumento sobrevive al cambio."
+  metaDescription:
+    en: "Five touring recitals and lecture-recitals: Beethoven op. 111, the Romantic pedal, Beethoven and Schubert's last sonatas, Liszt solo and Liszt for cello and piano."
+    es: "Cinco recitales y conferencias-concierto de gira: Beethoven op. 111, el pedal romántico, las últimas sonatas de Beethoven y Schubert, Liszt a solo y Liszt para violonchelo y piano."
+  notebox:
+    en: "Repertoire, duration and instrument are settled for each engagement, and the lecture-recitals can be given in English or Spanish. Two fortepianos can travel to the hall — an original Leschen of 1830 and a Graf copy by Paul McNulty — where that is useful. Where it is not, everything here works on a good modern piano."
+    es: "El repertorio, la duración y el instrumento se acuerdan para cada propuesta, y las conferencias-concierto pueden ofrecerse en español o en inglés. Dos fortepianos pueden desplazarse a la sala —un Leschen original de 1830 y una copia de Graf de Paul McNulty— cuando resulte útil. Cuando no, todo lo anterior funciona en un buen piano moderno."
+
+agenda:
+  title:
+    en: "Agenda — Antonio Simón"
+    es: "Agenda — Antonio Simón"
+  eyebrow:
+    en: "Agenda"
+    es: "Agenda"
+  display:
+    en: "Agenda"
+    es: "Agenda"
+  lede:
+    en: "Concerts, lecture-recitals and masterclasses."
+    es: "Conciertos, conferencias-concierto y clases magistrales."
+  metaDescription:
+    en: "Upcoming concerts, lecture-recitals and masterclasses by pianist and fortepianist Antonio Simón."
+    es: "Próximos conciertos, conferencias-concierto y clases magistrales del pianista y fortepianista Antonio Simón."
+  note:
+    en: "Some venues and organiser links are announced later than the date itself. For the current diary, or to propose one, write to me."
+    es: "Algunas salas y enlaces de los organizadores se anuncian más tarde que la propia fecha. Para la agenda actualizada, o para proponer una, escríbame."
+
 research:
+  title:
+    en: "Research — Antonio Simón"
+    es: "Investigación — Antonio Simón"
   eyebrow:
     en: "Research"
     es: "Investigación"
-  display: "The evidence"
+  display:
+    en: "The evidence"
+    es: "Las fuentes"
   lede:
-    en: "The playing rests on sources: treatises, early recordings, reproducing piano rolls. A selection of the work behind it."
-    es: "La interpretación se apoya en fuentes: tratados, primeras grabaciones, rollos de pianola. Una selección del trabajo que hay detrás."
+    en: "Treatises give a prescriptive horizon; early recordings and reproducing piano rolls give a behavioural one, contaminated by seventy years of drift. The grammar is what has to be true for both of them to make sense as a single tradition."
+    es: "Los tratados marcan un horizonte prescriptivo; las primeras grabaciones y los rollos de piano reproductor, uno conductual, contaminado por setenta años de deriva. La gramática es lo que debe ser cierto para que ambos tengan sentido como una sola tradición."
   metaDescription:
-    en: "The scholarship behind the playing: treatises, early recordings and reproducing piano rolls."
-    es: "La investigación detrás de la interpretación: tratados, primeras grabaciones y rollos de pianola."
+    en: "Research on Romantic pedalling, early recordings, reproducing piano rolls and performance as drama — presented in Vienna, Bern, Ghent, Cornell and Stanford."
+    es: "Investigación sobre el pedal romántico, las primeras grabaciones, los rollos de piano reproductor y la interpretación como drama — presentada en Viena, Berna, Gante, Cornell y Stanford."
+  note:
+    en: "For texts, a lecture invitation or an academic collaboration, write to me directly."
+    es: "Para textos, una invitación a dar una conferencia o una colaboración académica, escríbame directamente."
 
 about:
+  title:
+    en: "Biography — Antonio Simón"
+    es: "Biografía — Antonio Simón"
   eyebrow:
-    en: "About"
+    en: "Biography"
     es: "Biografía"
-  display: "Antonio Simón"
+  display:
+    en: "Antonio Simón"
+    es: "Antonio Simón"
+  lede:
+    en: "Pianist, fortepianist and researcher. Based in Málaga, at work between the instruments, the archives and the stage."
+    es: "Pianista, fortepianista e investigador. Desde Málaga, entre los instrumentos, los archivos y el escenario."
   metaDescription:
-    en: "Antonio Simón plays the Romantic repertoire the way its first audiences heard it. Biography, formation and record."
-    es: "Antonio Simón toca el repertorio romántico como lo escucharon sus primeros públicos. Biografía, formación y trayectoria."
+    en: "Biography of Antonio Simón: training in Madrid, Zagreb and Amsterdam, a doctorate on Liszt in Spain, recordings, venues and a tenured professorship in Málaga."
+    es: "Biografía de Antonio Simón: formación en Madrid, Zagreb y Ámsterdam, doctorado sobre Liszt en España, grabaciones, salas y cátedra en Málaga."
   recordLabel:
     en: "Record"
     es: "Datos"
+  shortBioLabel:
+    en: "Short biography — for programmes and press"
+    es: "Biografía breve — para programas y prensa"
 
 contact:
+  title:
+    en: "Contact — Antonio Simón"
+    es: "Contacto — Antonio Simón"
   eyebrow:
     en: "Contact"
     es: "Contacto"
-  display: "Talk to me"
+  display:
+    en: "Let’s talk"
+    es: "Hablemos"
   lede:
-    en: "Booking, programmes, instruments, press."
-    es: "Contratación, programas, instrumentos, prensa."
+    en: "Concerts, lecture-recitals, masterclasses, recordings, collaborations, press."
+    es: "Conciertos, conferencias-concierto, clases magistrales, grabaciones, colaboraciones, prensa."
   metaDescription:
-    en: "Contact Antonio Simón for booking, programmes, instruments and press."
-    es: "Contacte con Antonio Simón para contratación, programas, instrumentos y prensa."
+    en: "Contact Antonio Simón — booking, programmes, instruments, academic collaboration and press."
+    es: "Contacto con Antonio Simón — contratación, programas, instrumentos, colaboración académica y prensa."

@@ -3,32 +3,67 @@
     "desktop": "/img/hero-desktop-d2c4eb7588.webp",
     "mobile": "/img/hero-mobile-f5564470d2.webp",
     "ambient": "/img/hero-ambient-23a574ec9e.webp",
-    "alt": "Antonio Simón, portrait in green light",
-    "og": "/img/og-hero-9121aae904.webp"
+    "alt": {
+      "en": "Antonio Simón, portrait in green light",
+      "es": "Antonio Simón, retrato bajo luz verde"
+    },
+    "og": "/img/og-hero-9121aae904.webp",
+    "width": 960,
+    "height": 1200,
+    "mobileWidth": 760,
+    "mobileHeight": 950
   },
   "manifesto": {
     "desktop": "/img/manifesto-desktop-7df63db58a.webp",
     "mobile": "/img/manifesto-mobile-1564e3a528.webp",
     "ambient": "/img/manifesto-ambient-8f12ed2f1a.webp",
-    "alt": "Antonio Simón, portrait in red light"
+    "alt": {
+      "en": "Antonio Simón, portrait in red light, double exposure",
+      "es": "Antonio Simón, retrato bajo luz roja, doble exposición"
+    },
+    "width": 960,
+    "height": 1200,
+    "mobileWidth": 760,
+    "mobileHeight": 950
   },
   "agenda": {
     "desktop": "/img/agenda-desktop-95bd809ce5.webp",
     "mobile": "/img/agenda-mobile-7a461affda.webp",
     "ambient": "/img/agenda-ambient-9e529f5518.webp",
-    "alt": "Antonio Simón, black and white portrait with bars of light",
-    "filter": "grayscale(1) contrast(1.05)"
+    "alt": {
+      "en": "Antonio Simón, black and white portrait with bars of light",
+      "es": "Antonio Simón, retrato en blanco y negro con franjas de luz"
+    },
+    "filter": "grayscale(1) contrast(1.05)",
+    "width": 960,
+    "height": 1200,
+    "mobileWidth": 760,
+    "mobileHeight": 950
   },
   "about": {
     "desktop": "/img/about-desktop-c07f7ba66f.webp",
     "mobile": "/img/about-mobile-6b97f68136.webp",
     "ambient": "/img/about-ambient-08f8a506e9.webp",
-    "alt": "Antonio Simón, profile in green light"
+    "alt": {
+      "en": "Antonio Simón, profile in green light",
+      "es": "Antonio Simón, de perfil bajo luz verde"
+    },
+    "width": 768,
+    "height": 960,
+    "mobileWidth": 760,
+    "mobileHeight": 950
   },
   "contact": {
     "desktop": "/img/contact-desktop-9a67f1fea8.webp",
     "mobile": "/img/contact-mobile-9242dfc933.webp",
     "ambient": "/img/contact-ambient-b0bc1db294.webp",
-    "alt": "Antonio Simón, portrait in green light, facing the camera"
+    "alt": {
+      "en": "Antonio Simón, portrait in green light, facing the camera",
+      "es": "Antonio Simón, retrato bajo luz verde, mirando a cámara"
+    },
+    "width": 960,
+    "height": 1200,
+    "mobileWidth": 760,
+    "mobileHeight": 950
   }
 }

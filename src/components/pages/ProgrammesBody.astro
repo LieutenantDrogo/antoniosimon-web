@@ -1,0 +1,39 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import PageHead from '../PageHead.astro';
+import ProgrammeRow from '../ProgrammeRow.astro';
+import type { Lang } from '../../data/routes';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+
+const page = (await getEntry('pages', 'programmes'))!.data;
+const site = (await getEntry('site', 'site'))!.data;
+const programmes = (await getCollection('programmes')).sort((a, b) => a.data.order - b.data.order);
+
+const noteTitle = { en: 'Every hall, a different possibility', es: 'Cada sala, una posibilidad' };
+const write = { en: 'Discuss a date', es: 'Proponer una fecha' };
+---
+<section class="page">
+  <div class="inner">
+    <PageHead eyebrow={page.eyebrow[lang]} display={page.display[lang]} lede={page.lede?.[lang]} />
+
+    <div class="rows">
+      {programmes.map((p, i) => (
+        <ProgrammeRow
+          code={String(i + 1).padStart(2, '0')}
+          title={p.data.title[lang]}
+          subtitle={p.data.subtitle?.[lang]}
+          desc={p.data.desc[lang]}
+          meta={[p.data.kind[lang], p.data.forces[lang], p.data.duration].filter(Boolean).join(' · ')}
+        />
+      ))}
+    </div>
+
+    <aside class="notebox">
+      <h2>{noteTitle[lang]}</h2>
+      <p>{page.notebox?.[lang]}</p>
+      <p class="cta"><a href={`mailto:${site.email}`}>{write[lang]} <span aria-hidden="true">↗</span></a></p>
+    </aside>
+  </div>
+</section>

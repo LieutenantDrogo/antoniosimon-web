@@ -1,37 +1,9 @@
 ---
-import { getEntry } from 'astro:content';
+// Route wrapper. All markup lives in the shared body component so the EN and ES
+// routes cannot drift apart; all copy lives in src/content/.
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PhotoEnv from '../../components/PhotoEnv.astro';
-import DisplayHeading from '../../components/DisplayHeading.astro';
-
-const lang = 'es';
-const page = await getEntry('pages', 'contact');
-if (!page) throw new Error('Missing pages entry: contact');
-const site = await getEntry('site', 'site');
-if (!site) throw new Error('Missing site entry');
+import ContactBody from '../../components/pages/ContactBody.astro';
 ---
-<BaseLayout
-  pageId="contact"
-  lang={lang}
-  title="Contacto — Antonio Simón"
-  description={page.data.metaDescription[lang]}
->
-  <section class="page has-photo">
-    <PhotoEnv slot="contact" />
-    <div class="inner">
-      <div class="content">
-        <div class="eyebrow">{page.data.eyebrow[lang]}</div>
-        <DisplayHeading text={page.data.display} />
-        <p class="lede">{page.data.lede?.[lang]}</p>
-        <a class:list={['bigmail', { todo: site.data.emailTodo }]} href={`mailto:${site.data.email}`}>
-          {site.data.email}
-        </a>
-        <div class="cta">
-          <a class:list={{ todo: site.data.pressKit.todo }} href={site.data.pressKit.path}>
-            {site.data.pressKit.label[lang]}
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+<BaseLayout pageId="contact" lang="es">
+  <ContactBody lang="es" />
 </BaseLayout>

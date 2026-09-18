@@ -1,51 +1,92 @@
-the-last-word:
+# duration: optional. Left blank where it has not been fixed yet — the closing
+# note on the page covers it. See docs/PENDIENTES.md.
+
+last-word:
   title:
     en: "The Last Word — Beethoven, op. 111"
     es: "La última palabra — Beethoven, op. 111"
+  subtitle:
+    en: "From reconstruction to re-creation"
+    es: "De la reconstrucción a la recreación"
   desc:
-    en: "A twenty-minute talk, then the complete sonata. What the sources permit — and what they demand."
-    es: "Veinte minutos de charla y, después, la sonata completa. Lo que las fuentes permiten — y lo que exigen."
-  duration: "70 min"
+    en: "Beethoven’s final sonata read through the evidence of early recordings and reproducing piano rolls. A talk with recorded examples asks what reverence actually demanded in front of a score in 1827 — Liszt adding trills to the Moonlight in a Paris salon, and Liszt keeping strictly to the text at the Bonn festival ten years later, are the same man. The complete sonata then answers in sound. Given at Stanford University for the 4th Global Piano Roll Meeting and at the Perugia Historical Piano International Forum."
+    es: "La última sonata de Beethoven leída a través de las primeras grabaciones y los rollos de piano reproductor. Una charla con ejemplos sonoros pregunta qué exigía realmente la reverencia ante una partitura en 1827: el Liszt que añade trinos a la Claro de luna en un salón parisino y el Liszt que se ciñe al texto en el festival de Bonn diez años después son el mismo hombre. Después, la sonata completa responde en sonido. Presentado en Stanford University para el 4th Global Piano Roll Meeting y en el Perugia Historical Piano International Forum."
+  kind:
+    en: "Lecture-recital"
+    es: "Conferencia-concierto"
   forces:
     en: "solo · fortepiano (Graf copy) or modern piano"
     es: "solo · fortepiano (copia Graf) o piano moderno"
   order: 1
 
-beyond-legato:
+against-horror-vacui:
   title:
-    en: "Beyond Legato"
-    es: "Más allá del legato"
+    en: "Against Horror Vacui"
+    es: "Against Horror Vacui"
+  subtitle:
+    en: "The pedal as sonic imagination"
+    es: "El pedal como imaginación sonora"
   desc:
-    en: "The sustain pedal as dramatic agent: from Beethoven’s shadows to Liszt’s halos."
-    es: "El pedal de resonancia como agente dramático: de las sombras de Beethoven a los halos de Liszt."
-  duration: "60–75 min"
+    en: "In 1924 Moritz Rosenthal, Liszt’s own pupil, claimed the old masters had never possessed the syncopated pedal — the foot moving a hair after the hand. If he was even half right, the instinct at the centre of modern Romantic playing is a later habit applied backwards. Schumann’s markings, the treatises and the rolls of Reinecke, Davies and Friedheim return a four-colour palette where we now use one: rhythmic pedals, unashamedly long ones, and stretches of none at all."
+    es: "En 1924, Moritz Rosenthal, discípulo de Liszt, afirmó que los viejos maestros nunca habían conocido el pedal sincopado: el pie moviéndose un instante después de la mano. Si tenía razón aunque fuera a medias, el instinto que hoy está en el centro del pianismo romántico es un hábito posterior aplicado hacia atrás. Las indicaciones de Schumann, los tratados y los rollos de Reinecke, Davies y Friedheim devuelven una paleta de cuatro colores donde hoy usamos uno: pedales rítmicos, pedales largos sin pudor y tramos enteros sin pedal."
+  kind:
+    en: "Lecture-recital"
+    es: "Conferencia-concierto"
+  forces:
+    en: "solo · musical examples, treatises and piano rolls"
+    es: "solo · ejemplos musicales, tratados y rollos de pianola"
+  order: 2
+
+two-last-sonatas:
+  title:
+    en: "Two Last Sonatas — Beethoven & Schubert"
+    es: "Dos últimas sonatas — Beethoven y Schubert"
+  subtitle:
+    en: "Op. 111 and D. 960"
+    es: "Op. 111 y D. 960"
+  desc:
+    en: "Two ways of stretching time until an ending refuses to close. Written within six years of each other, for the same instrument and inside the same expressive grammar, and as far apart as two works of that grammar can be: one arrives at its arietta and stops arguing; the other keeps looking over its shoulder to the end."
+    es: "Dos maneras de dilatar el tiempo hasta que un final se niega a cerrarse. Escritas con seis años de diferencia, para el mismo instrumento y dentro de la misma gramática expresiva, y tan distantes entre sí como pueden serlo dos obras de esa gramática: una llega a su arietta y deja de discutir; la otra sigue mirando por encima del hombro hasta el último compás."
+  kind:
+    en: "Recital"
+    es: "Recital"
+  forces:
+    en: "solo · fortepiano or modern piano"
+    es: "solo · fortepiano o piano moderno"
+  order: 3
+
+liszt-solo:
+  title:
+    en: "Liszt — poetry, gesture, resonance"
+    es: "Liszt — poesía, gesto, resonancia"
+  subtitle:
+    en: "The Sonata in B minor and the nocturnes"
+    es: "La Sonata en si menor y los nocturnos"
+  desc:
+    en: "The programme of the 1860 Bechstein recording. In the years around the Sonata, Liszt met Bogumil Dawison, the leading naturalist actor of the day, and wrote of him: he creates when he reproduces. This reading follows that lead and treats the score as the script for an event rather than an object to execute — which is also what Friedheim and d’Albert, who studied the piece with Liszt, appear to have done, and never in the same way twice."
+    es: "El programa de la grabación en el Bechstein de 1860. En los años de la Sonata, Liszt conoció a Bogumil Dawison, la gran figura del nuevo teatro naturalista, y escribió de él que «crea cuando reproduce». Esta lectura sigue esa pista y trata la partitura como el guion de un acontecimiento, no como un objeto que ejecutar; que es también lo que parecen haber hecho Friedheim y d’Albert, que estudiaron la obra con Liszt, y nunca dos veces igual."
+  kind:
+    en: "Recital"
+    es: "Recital"
   forces:
     en: "solo · period or modern piano"
     es: "solo · piano de época o moderno"
-  order: 2
+  order: 4
 
-liszt-complete:
+liszt-cello:
   title:
-    en: "Liszt, Complete"
-    es: "Liszt, íntegro"
+    en: "Liszt, Complete — cello and piano"
+    es: "Liszt, íntegro — violonchelo y piano"
+  subtitle:
+    en: "With Trino Zurita"
+    es: "Con Trino Zurita"
   desc:
-    en: "The complete works for cello and piano, with Trino Zurita. Recorded; available as one or two programmes."
-    es: "La obra completa para violonchelo y piano, con Trino Zurita. Grabada; disponible como uno o dos programas."
-  duration: "60–120 min"
+    en: "The complete works for cello and piano, recorded on historical instruments from the Museu de la Música in Barcelona. Trino Zurita’s doctoral work is on cello playing before Casals, so the portamento and the undulation of the bow are as documented here as the pedalling. Available as one programme or two."
+    es: "La obra completa para violonchelo y piano, grabada con instrumentos históricos del Museu de la Música de Barcelona. La investigación doctoral de Trino Zurita trata sobre la interpretación violonchelística anterior a Casals, de modo que el portamento y la ondulación del arco están aquí tan documentados como el pedal. Disponible como un programa o como dos."
+  kind:
+    en: "Recital"
+    es: "Recital"
   forces:
     en: "duo · period or modern instruments"
     es: "dúo · instrumentos de época o modernos"
-  order: 3
-
-roll-generation:
-  title:
-    en: "The Roll Generation"
-    es: "La generación de los rollos"
-  desc:
-    en: "Lecture-recital on the reproducing piano rolls: the last living witnesses of Romantic playing."
-    es: "Conferencia-concierto sobre los rollos de pianola: los últimos testigos vivos del piano romántico."
-  duration: "60 min"
-  forces:
-    en: "solo · modern piano or fortepiano"
-    es: "solo · piano moderno o fortepiano"
-  order: 4
+  order: 5

@@ -1,34 +1,9 @@
 ---
-import { getEntry, getCollection } from 'astro:content';
+// Route wrapper. All markup lives in the shared body component so the EN and ES
+// routes cannot drift apart; all copy lives in src/content/.
 import BaseLayout from '../layouts/BaseLayout.astro';
-import DisplayHeading from '../components/DisplayHeading.astro';
-import ProgrammeRow from '../components/ProgrammeRow.astro';
-
-const lang = 'en';
-const page = await getEntry('pages', 'research');
-if (!page) throw new Error('Missing pages entry: research');
-const items = (await getCollection('research')).sort((a, b) => a.data.order - b.data.order);
+import ResearchBody from '../components/pages/ResearchBody.astro';
 ---
-<BaseLayout
-  pageId="research"
-  lang={lang}
-  title="Research — Antonio Simón"
-  description={page.data.metaDescription[lang]}
->
-  <section class="page">
-    <div class="inner">
-      <div class="eyebrow">{page.data.eyebrow[lang]}</div>
-      <DisplayHeading text={page.data.display} />
-      <p class="lede">{page.data.lede?.[lang]}</p>
-      <div style="margin-top:3rem">
-        {items.map((item) => (
-          <ProgrammeRow
-            title={item.data.title[lang]}
-            descHtml={item.data.descHtml[lang]}
-            descClass="small dim"
-          />
-        ))}
-      </div>
-    </div>
-  </section>
+<BaseLayout pageId="research" lang="en">
+  <ResearchBody lang="en" />
 </BaseLayout>

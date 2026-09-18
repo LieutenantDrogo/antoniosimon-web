@@ -1,35 +1,51 @@
-beyond-legato-lecture:
+pedalling:
+  code:
+    en: "01 / Pedalling"
+    es: "01 / Pedal"
   title:
-    en: "Beyond Legato — the sustain pedal as dramatic agent"
-    es: "Más allá del legato — el pedal de resonancia como agente dramático"
-  descHtml:
-    en: 'Lecture, Perugia Historical Piano International Forum, 2026. <span class="todo">[Video link]</span>'
-    es: 'Conferencia, Perugia Historical Piano International Forum, 2026. <span class="todo">[Enlace al vídeo]</span>'
+    en: "A palette reduced to one colour"
+    es: "Una paleta reducida a un solo color"
+  desc:
+    en: "The pedal changes the continuity, the colour and the tension of a phrase, and it is the least theorised parameter in Romantic performance practice. Schumann’s and Liszt’s own markings, read against the treatises and against what their pupils actually do on the rolls, restore a range of uses that a single habitual technique has hidden."
+    es: "El pedal modifica la continuidad, el color y la tensión de una frase, y es el parámetro menos teorizado de la práctica interpretativa romántica. Las indicaciones de Schumann y de Liszt, leídas contra los tratados y contra lo que sus discípulos hacen realmente en los rollos, devuelven una variedad de usos que una única técnica habitual ha ocultado."
+  meta: "Vienna, mdw · University of Bern · Perugia"
   order: 1
 
-reading-the-rolls:
+rolls:
+  code:
+    en: "02 / Early recordings"
+    es: "02 / Grabaciones históricas"
   title:
-    en: "Reading the rolls"
-    es: "Leer los rollos"
-  descHtml:
-    en: 'An ongoing computational study of reproducing piano rolls — tempo, rubato and chord asynchrony measured against the score. <span class="todo">[Link]</span>'
-    es: 'Un estudio computacional en curso de los rollos de pianola: tempo, rubato y asincronía de acordes medidos contra la partitura. <span class="todo">[Enlace]</span>'
+    en: "What the hands remember"
+    es: "Lo que las manos recuerdan"
+  desc:
+    en: "Welte, Duo-Art and Hupfeld rolls preserve ways of coordinating voices and organising time that notation almost never records. Using them as evidence means separating three things that arrive together: the player’s practice, the technology that captured it, and seventy years of stylistic drift between that moment and ours."
+    es: "Los rollos de Welte, Duo-Art y Hupfeld conservan maneras de coordinar las voces y organizar el tiempo que la notación casi nunca registra. Usarlos como prueba exige separar tres cosas que llegan juntas: la práctica del intérprete, la tecnología que la capturó y setenta años de deriva estilística entre aquel momento y el nuestro."
+  meta: "Stanford University · Westfield Center, Cornell University"
   order: 2
 
-doctoral-thesis:
+drama:
+  code:
+    en: "03 / Performance"
+    es: "03 / Interpretación"
   title:
-    en: "Doctoral thesis"
-    es: "Tesis doctoral"
-  descHtml:
-    en: 'Mariano Soriano Fuertes Prize in Musicology. <span class="todo">[Title &amp; link]</span>'
-    es: 'Premio Mariano Soriano Fuertes de Musicología. <span class="todo">[Título y enlace]</span>'
+    en: "Music as drama"
+    es: "La música como drama"
+  desc:
+    en: "How does an expressive intention become an instrumental gesture? A structurally faithful performance is as odd as an actor whose Hamlet sets out to make the syntax of the text visible. The nineteenth century’s governing model for performance was the stage, not the diagram, and the actor’s craft turns out to be the more useful tool."
+    es: "¿Cómo se convierte una intención expresiva en un gesto instrumental? Una interpretación fiel a la estructura resulta tan extraña como un actor cuyo Hamlet se propusiera hacer visible la sintaxis del texto. El modelo que rigió la interpretación en el siglo XIX fue el escenario, no el diagrama, y el oficio del actor acaba siendo la herramienta más útil."
+  meta: "Orpheus Instituut, Ghent"
   order: 3
 
-selected-writing:
+liszt-spain:
+  code:
+    en: "04 / Musicology"
+    es: "04 / Musicología"
   title:
-    en: "Selected writing"
-    es: "Escritos seleccionados"
-  descHtml:
-    en: '<span class="todo">[Two or three articles, max.]</span>'
-    es: '<span class="todo">[Dos o tres artículos, como máximo.]</span>'
+    en: "Liszt in Spain"
+    es: "Liszt en España"
+  desc:
+    en: "The doctoral thesis, awarded the Mariano Soriano Fuertes Musicology Prize: Liszt’s presence in Spain, and what a travelling virtuoso’s repertoire, press and audiences reveal about a musical culture at a particular moment."
+    es: "La tesis doctoral, distinguida con el Premio de Musicología Mariano Soriano Fuertes: la presencia de Liszt en España y lo que el repertorio, la prensa y los públicos de un virtuoso itinerante revelan sobre una cultura musical en un momento concreto."
+  meta: "PhD in Music · Universidad de Málaga"
   order: 4

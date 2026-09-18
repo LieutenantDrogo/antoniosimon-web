@@ -5,8 +5,8 @@ interface Props {
 }
 const { label, rows } = Astro.props;
 ---
-<div class="record">
-  <h4>{label}</h4>
+<section class="record">
+  <h2>{label}</h2>
   <dl>
     {rows.map((row) => (
       <>
@@ -15,4 +15,4 @@ const { label, rows } = Astro.props;
       </>
     ))}
   </dl>
-</div>
+</section>

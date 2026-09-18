@@ -1,37 +1,9 @@
 ---
-import { getEntry, getCollection } from 'astro:content';
+// Route wrapper. All markup lives in the shared body component so the EN and ES
+// routes cannot drift apart; all copy lives in src/content/.
 import BaseLayout from '../layouts/BaseLayout.astro';
-import DisplayHeading from '../components/DisplayHeading.astro';
-import ProgrammeRow from '../components/ProgrammeRow.astro';
-
-const lang = 'en';
-const page = await getEntry('pages', 'programmes');
-if (!page) throw new Error('Missing pages entry: programmes');
-const programmes = (await getCollection('programmes')).sort((a, b) => a.data.order - b.data.order);
+import ProgrammesBody from '../components/pages/ProgrammesBody.astro';
 ---
-<BaseLayout
-  pageId="programmes"
-  lang={lang}
-  title="Programmes — Antonio Simón"
-  description={page.data.metaDescription[lang]}
->
-  <section class="page">
-    <div class="inner">
-      <div class="eyebrow">{page.data.eyebrow[lang]}</div>
-      <DisplayHeading text={page.data.display} />
-      <p class="lede">{page.data.lede?.[lang]}</p>
-      <div style="margin-top:3rem">
-        {programmes.map((p) => (
-          <ProgrammeRow
-            title={p.data.title[lang]}
-            desc={p.data.desc[lang]}
-            meta={`${p.data.duration} · ${p.data.forces[lang]}`}
-          />
-        ))}
-      </div>
-      {page.data.notebox && (
-        <div class="notebox small">{page.data.notebox[lang]}</div>
-      )}
-    </div>
-  </section>
+<BaseLayout pageId="programmes" lang="en">
+  <ProgrammesBody lang="en" />
 </BaseLayout>

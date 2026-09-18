@@ -1,0 +1,60 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import PageHead from '../PageHead.astro';
+import VideoPoster from '../VideoPoster.astro';
+import ProgrammeRow from '../ProgrammeRow.astro';
+import { uiStrings } from '../../data/routes';
+import type { Lang } from '../../data/routes';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+
+const page = (await getEntry('pages', 'listen'))!.data;
+const videos = (await getCollection('videos')).sort((a, b) => a.data.order - b.data.order);
+const recordings = (await getCollection('recordings')).sort((a, b) => a.data.order - b.data.order);
+---
+<section class="page">
+  <div class="inner">
+    <PageHead eyebrow={page.eyebrow[lang]} display={page.display[lang]} lede={page.lede?.[lang]} />
+
+    <div class="vidgrid">
+      {videos.map((v) => {
+        const label = `${v.data.composer} — ${v.data.work[lang]}`;
+        return (
+          <article class="vid">
+            <div class="frame">
+              <VideoPoster youtubeId={v.data.youtubeId} label={label} lang={lang} />
+            </div>
+            <p class="meta">{v.data.instrument[lang]}</p>
+            <h3 class="vid-title">{v.data.composer}</h3>
+            <p class="vid-work">{v.data.work[lang]}</p>
+            {v.data.caption && <p class="small dim">{v.data.caption[lang]}</p>}
+            <p class="prog-link">
+              <a href={`https://www.youtube.com/watch?v=${v.data.youtubeId}`} rel="noopener">
+                {uiStrings.watchOnYouTube[lang]} <span aria-hidden="true">↗</span>
+              </a>
+            </p>
+          </article>
+        );
+      })}
+    </div>
+    <p class="small dim pagenote">{uiStrings.externalPlayerNote[lang]}</p>
+
+    <section class="reclist">
+      <h2 class="eyebrow">{page.reclistEyebrow?.[lang]}</h2>
+      <div class="rows">
+        {recordings.map((r) => (
+          <ProgrammeRow
+            code={r.data.marker}
+            title={r.data.title[lang]}
+            desc={r.data.desc[lang]}
+            meta={r.data.meta?.[lang]}
+            url={r.data.url}
+            urlLabel={r.data.urlLabel?.[lang]}
+            descClass="desc small"
+          />
+        ))}
+      </div>
+    </section>
+  </div>
+</section>

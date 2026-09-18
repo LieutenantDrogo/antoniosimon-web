@@ -1,0 +1,33 @@
+---
+import { getEntry, render } from 'astro:content';
+import PhotoEnv from '../PhotoEnv.astro';
+import PageHead from '../PageHead.astro';
+import { routes } from '../../data/routes';
+import type { Lang } from '../../data/routes';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+
+const page = (await getEntry('pages', 'manifesto'))!.data;
+const entry = await getEntry('manifesto', `manifesto.${lang}`);
+if (!entry) throw new Error(`Missing manifesto entry: ${lang}`);
+const { Content } = await render(entry);
+
+const more = { en: 'The evidence behind it', es: 'Las fuentes que lo sostienen' };
+---
+<section class="page has-photo">
+  <PhotoEnv photo="manifesto" lang={lang} />
+  <div class="inner">
+    <div class="content">
+      <PageHead
+        eyebrow={page.eyebrow[lang]}
+        display={page.display[lang]}
+        italic={page.displayItalic}
+        lede={page.lede?.[lang]}
+      />
+      <div class="manifesto-body"><Content /></div>
+      <p class="signature">Antonio Simón</p>
+      <p class="cta"><a href={routes.research[lang]}>{more[lang]} <span aria-hidden="true">↗</span></a></p>
+    </div>
+  </div>
+</section>

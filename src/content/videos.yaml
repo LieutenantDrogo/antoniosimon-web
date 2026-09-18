@@ -1,18 +1,30 @@
-hero:
+# Titles verified against the YouTube oEmbed endpoint, September 2026.
+# Instrument, hall and date of each recording: see docs/PENDIENTES.md.
+
+schubert-d960:
   youtubeId: "lOF9U-MJnAA"
-  todo: true
+  composer: "Franz Schubert"
+  work:
+    en: "Sonata D. 960 · II. Andante sostenuto"
+    es: "Sonata D. 960 · II. Andante sostenuto"
+  instrument:
+    en: "Fortepiano"
+    es: "Fortepiano"
   caption:
-    en: "[Piece — instrument — venue. Caption to be written.]"
-    es: "[Obra — instrumento — sala. Pendiente de redactar.]"
+    en: "The slow movement of the last sonata, on a fortepiano: time given rather than kept."
+    es: "El movimiento lento de la última sonata, al fortepiano: un tiempo que se concede, no que se mide."
   order: 1
 
-modern-piano:
+scriabin-op11:
   youtubeId: "uA1FBEk8QI4"
-  locked: true
-  captionBold:
-    en: "Same grammar, modern instrument."
-    es: "La misma gramática, instrumento moderno."
-  captionRest:
-    en: "The practice is not tied to the hardware."
-    es: "La práctica no depende del instrumento."
+  composer: "Alexander Scriabin"
+  work:
+    en: "Prelude op. 11 no. 15"
+    es: "Preludio op. 11 n.º 15"
+  instrument:
+    en: "Modern piano"
+    es: "Piano moderno"
+  caption:
+    en: "Same grammar, modern instrument. The practice is not tied to the hardware."
+    es: "La misma gramática, instrumento moderno. La práctica no depende del instrumento."
   order: 2

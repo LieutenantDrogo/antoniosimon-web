@@ -1,5 +1,5 @@
 ---
-import { routes } from '../data/routes';
+import { routes, uiStrings } from '../data/routes';
 import type { PageId, Lang } from '../data/routes';
 
 interface Props {
@@ -8,7 +8,12 @@ interface Props {
 }
 const { pageId, lang } = Astro.props;
 ---
-<span class="lang">
-  <a href={routes[pageId].en} class:list={{ on: lang === 'en' }}>EN</a>
-  <a href={routes[pageId].es} class:list={{ on: lang === 'es' }}>ES</a>
+<span class="lang" role="group" aria-label={uiStrings.language[lang]}>
+  <a href={routes[pageId].en} lang="en" hreflang="en"
+     aria-current={lang === 'en' ? 'true' : undefined}
+     class:list={{ on: lang === 'en' }}>EN</a>
+  <span class="lang-sep" aria-hidden="true">/</span>
+  <a href={routes[pageId].es} lang="es" hreflang="es"
+     aria-current={lang === 'es' ? 'true' : undefined}
+     class:list={{ on: lang === 'es' }}>ES</a>
 </span>

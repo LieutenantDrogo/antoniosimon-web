@@ -1,16 +1,18 @@
 site:
   email: "info@antoniosimon.es"
-  emailTodo: true
-  pressKit:
-    path: "/press/antonio-simon-press-kit.pdf"
-    todo: true
-    label:
-      en: "Press kit — photos & bio (EN/ES)"
-      es: "Dossier de prensa — fotos y biografía (EN/ES)"
+  city:
+    en: "Málaga, Spain"
+    es: "Málaga, España"
+  reach:
+    en: "Working internationally"
+    es: "Proyectos internacionales"
+  youtube: "https://www.youtube.com/@antoniosimonmedia"
   press:
     - "PBS — Now Hear This"
     - "The New York Times"
     - "Premio Soriano Fuertes"
   quote:
-    text: "«A refined artist»"
-    who: "Alisa Cakarun — Slobodna Dalmacija"
+    text:
+      en: "«A refined artist»"
+      es: "«Un artista refinado»"
+    who: "Alisa Čakarun — Slobodna Dalmacija"

@@ -1,26 +1,46 @@
-liszt-sonata-b-minor:
+liszt-bechstein:
+  marker: "01"
   title:
-    en: "Liszt — Sonata in B minor, on period instruments"
-    es: "Liszt — Sonata en si menor, con instrumentos de época"
+    en: "Liszt — Sonata in B minor, and nocturnes"
+    es: "Liszt — Sonata en si menor, y nocturnos"
   desc:
-    en: "The first recording of its kind."
-    es: "La primera grabación de este tipo."
+    en: "Recorded on an 1860 Bechstein: the pedalling, the timing and the dramatic reading of the Sonata worked out on an instrument of its own decade. In post-production."
+    es: "Grabado en un Bechstein de 1860: el pedal, el tiempo y la lectura dramática de la Sonata resueltos en un instrumento de su propia década. En posproducción."
+  meta:
+    en: "Release planned for 2027"
+    es: "Publicación prevista para 2027"
   order: 1
 
 liszt-cello-piano:
+  marker: "02"
   title:
-    en: "Liszt — Complete works for cello & piano"
+    en: "Liszt — Complete works for cello and piano"
     es: "Liszt — Obra completa para violonchelo y piano"
   desc:
-    en: "With Trino Zurita."
-    es: "Con Trino Zurita."
+    en: "With the cellist Trino Zurita, on historical instruments from the Museu de la Música in Barcelona."
+    es: "Con el violonchelista Trino Zurita, con instrumentos históricos del Museu de la Música de Barcelona."
+  meta:
+    en: "Columna Música, 2011"
+    es: "Columna Música, 2011"
+  url: "https://www.discogs.com/release/14956210"
+  urlLabel:
+    en: "Album details"
+    es: "Ficha del disco"
   order: 2
 
 scarlatti-pbs:
+  marker: "03"
   title:
-    en: "Scarlatti — PBS, Now Hear This"
-    es: "Scarlatti — PBS, Now Hear This"
+    en: "Scarlatti — Now Hear This, PBS"
+    es: "Scarlatti — Now Hear This, PBS"
   desc:
-    en: "A central role in the Scarlatti episode, at the piano and the harpsichord — a New York Times critics’ pick."
-    es: "Un papel central en el episodio dedicado a Scarlatti, al piano y al clave — destacado por The New York Times."
+    en: "Pianist and harpsichordist in the Scarlatti episode of the PBS series, a New York Times critics’ pick."
+    es: "Pianista y clavecinista en el episodio dedicado a Scarlatti de la serie de PBS, destacado por The New York Times."
+  meta:
+    en: "Great Performances, 2019"
+    es: "Great Performances, 2019"
+  url: "https://www.pbs.org/wnet/gperf/now-hear-this-scarlatti-man-out-of-time-preview/9962"
+  urlLabel:
+    en: "Watch the preview"
+    es: "Ver el avance"
   order: 3

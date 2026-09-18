@@ -1,0 +1,36 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import PageHead from '../PageHead.astro';
+import ProgrammeRow from '../ProgrammeRow.astro';
+import type { Lang } from '../../data/routes';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+
+const page = (await getEntry('pages', 'research'))!.data;
+const site = (await getEntry('site', 'site'))!.data;
+const items = (await getCollection('research')).sort((a, b) => a.data.order - b.data.order);
+
+const write = { en: 'Write to me', es: 'Escríbame' };
+---
+<section class="page">
+  <div class="inner">
+    <PageHead eyebrow={page.eyebrow[lang]} display={page.display[lang]} lede={page.lede?.[lang]} />
+
+    <div class="rows">
+      {items.map((r) => (
+        <ProgrammeRow
+          code={r.data.code[lang]}
+          title={r.data.title[lang]}
+          desc={r.data.desc[lang]}
+          meta={r.data.meta}
+          url={r.data.url}
+          urlLabel={r.data.url ? (lang === 'en' ? 'Read' : 'Leer') : undefined}
+        />
+      ))}
+    </div>
+
+    <p class="small dim pagenote">{page.note?.[lang]}</p>
+    <p class="cta"><a href={`mailto:${site.email}`}>{write[lang]} <span aria-hidden="true">↗</span></a></p>
+  </div>
+</section>

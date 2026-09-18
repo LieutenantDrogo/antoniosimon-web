@@ -9,3 +9,6 @@ npm-debug.log*
 .env
 .env.production
 .idea/
+
+# Playwright CLI scratch output from review runs
+.playwright-cli/

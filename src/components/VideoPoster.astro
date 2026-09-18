@@ -1,31 +1,51 @@
 ---
+import videoThumbs from '../data/video-thumbs.json';
+import type { Lang } from '../data/routes';
+import { uiStrings } from '../data/routes';
+
 interface Props {
   youtubeId: string;
+  label: string;
+  lang: Lang;
 }
-const { youtubeId } = Astro.props;
+const { youtubeId, label, lang } = Astro.props;
+const thumb = (videoThumbs as Record<string, string>)[youtubeId];
 ---
-<button class="poster" data-yt={youtubeId} aria-label="Play video">
-  <img src={`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`} alt="" />
-  <span class="play">▶</span>
+<button
+  class="poster"
+  type="button"
+  data-yt={youtubeId}
+  data-title={label}
+  aria-label={`${uiStrings.playVideo[lang]} — ${label}`}
+>
+  <img src={thumb} alt="" width="960" height="540" loading="lazy" decoding="async" />
+  <span class="play" aria-hidden="true">
+    <span class="play-icon">▶</span>
+    <span class="play-label">{uiStrings.playVideo[lang]}</span>
+  </span>
 </button>
 
 <script>
-  // Bound on astro:page-load, not DOMContentLoaded: inline module scripts
-  // don't re-execute on ClientRouter navigations, so DOMContentLoaded would
-  // only ever fire once per hard load and the facade would be dead on the
-  // Media page after any client-side navigation into it. astro:page-load
-  // fires after every navigation, including the first.
-  function bindPosters() {
-    document.querySelectorAll<HTMLButtonElement>('.poster').forEach((poster) => {
-      poster.addEventListener('click', () => {
-        const iframe = document.createElement('iframe');
-        iframe.src = `https://www.youtube-nocookie.com/embed/${poster.dataset.yt}?autoplay=1`;
-        iframe.allow = 'autoplay; fullscreen';
-        iframe.allowFullscreen = true;
-        iframe.title = 'Video';
-        poster.parentNode?.replaceChild(iframe, poster);
-      });
+  // Click-to-play facade: nothing reaches YouTube until the visitor asks for it.
+  // Bound on astro:page-load — DOMContentLoaded does not refire after a
+  // client-side navigation, which would leave the button dead.
+  function initPosters() {
+    document.querySelectorAll<HTMLButtonElement>('.poster').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.yt ?? '';
+        if (!/^[A-Za-z0-9_-]{11}$/.test(id)) return;
+        const frame = document.createElement('iframe');
+        frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+        frame.title = btn.dataset.title ?? 'Video';
+        frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+        frame.referrerPolicy = 'strict-origin-when-cross-origin';
+        frame.allowFullscreen = true;
+        frame.loading = 'lazy';
+        btn.replaceWith(frame);
+        frame.focus();
+      }, { once: true });
     });
   }
-  document.addEventListener('astro:page-load', bindPosters);
+
+  document.addEventListener('astro:page-load', initPosters);
 </script>

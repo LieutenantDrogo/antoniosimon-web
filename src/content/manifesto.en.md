@@ -1,7 +1,9 @@
-Western classical music has forgotten how it used to speak. Piano rolls, early recordings and treatises document a grammar the twentieth century suppressed: hands that don’t align, chords broken open, rubato that bends structure, the pedal as dramatic agent. I play as if that grammar had never been outlawed.
+The nineteenth century wrote down less than it knew. Hands that do not strike together; chords opened rather than struck; a tempo that bends to the shape of a phrase; a pedal used for drama rather than for glue. The treatises describe these things as ordinary. The early recordings and the reproducing piano rolls show them being done, by people who studied with the composers. None of it was exotic. It was simply how the language was spoken.
 
-Verdi said it: **torniamo all’antico, e sarà un progresso** — return to the old, and it will be progress. The past is the avant-garde.
+Almost all of that grammar has left the concert hall, and its absence is rarely noticed. The clean, vertical, synchronised reading feels like restraint — like fidelity, like leaving the music alone. It is none of those things. It is a twentieth-century style, as historical as any other, projected backwards and mistaken for the absence of style. **The anachronism is not the dislocated hand. It is the tidy one.**
 
-This is not about museum instruments. I play fortepianos because they sharpen the argument, and modern pianos because the argument travels. The instrument is not the thesis; the playing is.
+I am not restoring anything. The sources are fragmentary, they contradict one another, and every one of them belongs to a particular body in a particular room. What they offer is not an instruction manual but a wider field of legitimate readings — an open work whose openness has been earned by constraint. Verdi's advice holds: *torniamo all'antico, e sarà un progresso.* The return is the way forward.
 
-The Romantics were not polite. Neither is this.
+Historical instruments belong to this work, not as heritage objects but as instruments of perception. An 1830 Leschen or a Graf copy answers differently to the hand and speaks differently into a room, and what it teaches does not stay behind when I sit down at a modern piano. The instrument is not the argument. It is where the argument becomes audible.
+
+So: I choose, and I say so. Inside what the evidence permits, and answerable to it — which means the claim can fail in the hall, in front of you, which is where a claim about music ought to be settled.

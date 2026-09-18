@@ -1,44 +1,9 @@
 ---
-import { getEntry } from 'astro:content';
+// Route wrapper. All markup lives in the shared body component so the EN and ES
+// routes cannot drift apart; all copy lives in src/content/.
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PhotoEnv from '../../components/PhotoEnv.astro';
-import DisplayHeading from '../../components/DisplayHeading.astro';
-import { routes } from '../../data/routes';
-import images from '../../data/images.json';
-
-const lang = 'es';
-const page = await getEntry('pages', 'home');
-if (!page) throw new Error('Missing pages entry: home');
-const site = await getEntry('site', 'site');
-if (!site) throw new Error('Missing site entry');
+import HomeBody from '../../components/pages/HomeBody.astro';
 ---
-<BaseLayout
-  pageId="home"
-  lang={lang}
-  title="Antonio Simón — pianista y fortepianista"
-  description={page.data.metaDescription[lang]}
-  ogImage={images.hero.og}
->
-  <section class="page has-photo">
-    <PhotoEnv slot="hero" />
-    <div class="inner">
-      <div class="content">
-        <div class="eyebrow">{page.data.eyebrow[lang]}</div>
-        <DisplayHeading text={page.data.display} />
-        <p class="lede">{page.data.lede?.[lang]}</p>
-        <div class="quote">
-          {site.data.quote.text}
-          <span class="who">{site.data.quote.who}</span>
-        </div>
-        <div class="press">
-          {site.data.press.map((item) => <span>{item}</span>)}
-        </div>
-        <div class="cta">
-          {page.data.cta?.map((c) => (
-            <a href={routes[c.page as keyof typeof routes][lang]}>{c.label[lang]}</a>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
+<BaseLayout pageId="home" lang="es">
+  <HomeBody lang="es" />
 </BaseLayout>
